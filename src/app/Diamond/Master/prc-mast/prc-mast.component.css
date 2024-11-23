@@ -1,0 +1,22 @@
+.prc-mast__container--row-2 {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-auto-flow: column;
+  grid-gap: 0.5rem;
+  align-items: center;
+  justify-items: start;
+}
+
+.chkbx-grp {
+  border: 1px black solid;
+  border-radius: 5px;
+  padding: 5px;
+  grid-column: span 2;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  grid-gap: 0.5rem;
+}

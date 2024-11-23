@@ -1,0 +1,17 @@
+<!-- <mat-form-field class="example-full-width lot-2" appearance="outline">
+  <input matInput [(ngModel)]="QuickFilter" autocapitalize="off" (input)="QuickSearch()">
+</mat-form-field> -->
+
+<div class="search-result">
+  <ag-grid-angular style="width: 100%; height: calc(95vh - 130px);" class="ag-theme-alpine" [animateRows]="true"
+    [defaultColDef]="defaultColDef" [pagination]="true" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)"(selectionChanged)='onSelectionChanged($event)'
+    (cellDoubleClicked)="onCellDoubleClicked($event)"
+    [rowMultiSelectWithClick]="true" [suppressRowClickSelection]="true" [rowSelection]="rowSelection">
+  </ag-grid-angular>
+</div>
+
+
+<div class="from-group lot-btn action-btn-exit">
+  <button class="btn theme-btn" (click)="Close()">Exit</button>
+  <button class="btn theme-btn" (click)="Clear()">Clear</button>
+</div>

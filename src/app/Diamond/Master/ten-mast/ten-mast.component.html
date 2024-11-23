@@ -1,0 +1,37 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Code *</mat-label>
+      <input type="number" matInput name="Code *" autocomplete="off" [(ngModel)]="TEN_CODE" (blur)="CODECHANGE()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name *</mat-label>
+      <input type="text" matInput name="Code *" autocomplete="off" [(ngModel)]="TEN_NAME"
+        (ngModelChange)="TEN_NAME = $event.toUpperCase()" (blur)="Save()" />
+    </mat-form-field>
+
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <mat-icon> refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

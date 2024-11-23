@@ -1,0 +1,44 @@
+<div class="dashboard__container">
+  <div class="dashboard__container--row-1">
+    <button class="btn theme-btn" matTooltip='Stock' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashStockComponent');">Stock</button>
+    <button class="btn theme-btn" matTooltip='Recieve' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashRecieveComponent');">Recieve</button>
+    <button class="btn theme-btn" matTooltip='Current Rolling' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashCurrollingComponent');">Current Rolling</button>
+    <button class="btn theme-btn" matTooltip='Todays Makeable' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashTodaymakeableComponent');">Today's Makeable</button>
+    <button class="btn theme-btn" matTooltip='Makeable View' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashMakeableviewComponent');">Makeable View</button>
+    <button class="btn theme-btn" matTooltip='Prediction Pending<' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashPrependingComponent');">Prediction Pending</button>
+    <button class="btn theme-btn" matTooltip='Top 20 Marker' matTooltipClass="custom-tooltip"
+      (click)="onPress('DashTop20markerComponent');">Top 20 Marker</button>
+  </div>
+  <div
+    [ngClass]="{'view-1': viewCounter.length === 1, 'view-2': viewCounter.length === 2, 'view-3': viewCounter.length > 2}"
+    class="view">
+    <!-- <div class="comp-1of1"></div> -->
+    <div *ngIf="displayStk">
+      <app-dash-stock></app-dash-stock>
+    </div>
+    <div *ngIf="displayRec">
+      <app-dash-recieve></app-dash-recieve>
+    </div>
+    <div *ngIf="displayRol">
+      <app-dash-currolling></app-dash-currolling>
+    </div>
+    <div *ngIf="displayTm">
+      <app-dash-todaymakeable></app-dash-todaymakeable>
+    </div>
+    <div *ngIf="displayMv">
+      <app-dash-makeableview></app-dash-makeableview>
+    </div>
+    <div *ngIf="displayPp">
+      <app-dash-prepending></app-dash-prepending>
+    </div>
+    <div *ngIf="displayTtm">
+      <app-dash-top20marker></app-dash-top20marker>
+    </div>
+  </div>
+</div>

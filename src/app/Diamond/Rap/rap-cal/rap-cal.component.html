@@ -1,0 +1,497 @@
+<mat-chip-list class="flex-div" multiple="false">
+  <mat-chip *ngFor="let shp of shapeArray" class="shape flex__btn"
+    (click)="disabled == false ?SelectItem(shp,'shapeArray'):'';disabled == false ?PARAMCOMBO(shp.code):''"
+    [selected]="shp.selected" [disabled]="disabled">
+    <i class="icon-{{shp.code}} shape-bar__icon"></i>
+    <span class="flex__btn-text mt-1">{{ shp.name }}</span>
+  </mat-chip>
+</mat-chip-list>
+
+
+<mat-chip-list class="flex-div">
+  <mat-chip *ngFor="let cla of clarityArray" class="clarity flex__btn"
+    (click)="disabled == false? SelectItem(cla,'clarityArray'):''" [selected]="cla.selected" [disabled]="disabled">
+    <span class="flex__btn-text">{{ cla.name }}</span>
+  </mat-chip>
+</mat-chip-list>
+
+<mat-chip-list class="flex-div">
+  <mat-chip *ngFor="let col of colorArray" class="color flex__btn"
+    (click)="disabled == false?SelectItem(col,'colorArray'):''" [selected]="col.selected" [disabled]="disabled">
+    <span class="flex__btn-text">{{ col.name }}</span>
+  </mat-chip>
+</mat-chip-list>
+
+<div class="CPS">
+
+  <mat-chip-list class="flex-div flex-col">
+    Cut
+    <mat-chip *ngFor="let cut of cutArray" class="cut flex__btn"
+      (click)="disabled == false?SelectItem(cut,'cutArray'):''" [selected]="cut.selected" [disabled]="disabled">
+      <span class="flex__btn-text">{{ cut.name }}</span>
+    </mat-chip>
+  </mat-chip-list>
+
+  <mat-chip-list class="flex-div flex-col">
+    Pol
+    <mat-chip *ngFor="let pol of polArray" class="cut flex__btn"
+      (click)="disabled == false?SelectItem(pol,'polArray'):''" [selected]="pol.selected" [disabled]="disabled">
+      <span class="flex__btn-text">{{ pol.name }}</span>
+    </mat-chip>
+  </mat-chip-list>
+
+  <mat-chip-list class="flex-div flex-col">
+    Sym
+    <mat-chip *ngFor="let sym of symArray" class="cut flex__btn"
+      (click)="disabled == false?SelectItem(sym,'symArray'):''" [selected]="sym.selected" [disabled]="disabled">
+      <span class="flex__btn-text">{{ sym.name }}</span>
+    </mat-chip>
+  </mat-chip-list>
+
+  <mat-chip-list class="flex-div flex-col">
+    FL
+    <mat-chip *ngFor="let flo of floArray" class="flo col-wid flex__btn"
+      (click)="disabled == false?SelectItem(flo,'floArray'):''" [selected]="flo.selected" [disabled]="disabled">
+      <span class="flex__btn-text">{{ flo.name }}</span>
+    </mat-chip>
+  </mat-chip-list>
+
+  <mat-chip-list class="flex-div flex-col">
+    Inclusion
+    <div class="reg-chip">
+      <mat-chip *ngFor="let reg of RegArray" class="reg flex__btn"
+        (click)="disabled == false?SelectItem(reg,'RegArray'):''" [selected]="reg.selected" [disabled]="disabled">
+        <span class="flex__btn-text">{{ reg.name }}</span>
+      </mat-chip>
+    </div>
+  </mat-chip-list>
+
+  <mat-chip-list class="flex-div flex-col">
+    Shade
+    <div class="shd-chip">
+      <mat-chip *ngFor="let shd of shadeArray" class="shd flex__btn"
+        (click)="disabled == false?SelectItem(shd,'shadeArray'):''" [selected]="shd.selected" [disabled]="disabled">
+        <span class="flex__btn-text">{{ shd.name }}</span>
+      </mat-chip>
+    </div>
+  </mat-chip-list>
+  <div class="flex-inc-div">
+    <mat-chip *ngFor="let name of RAPTArray" class="btn-param"
+      (click)="disabled == false?SELECTRAPTITEM(name,'RAPTArray'):''" [selected]="name.selected" [disabled]="disabled">
+      <span class="flex__btn-text">{{ name.name }}</span>
+    </mat-chip>
+
+    <div class="dropdown dropup">
+      <button class="btn theme-btn mx-btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+        data-bs-auto-close="false" aria-expanded="false">
+        Param
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <div class="param-dropup">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Depth</mat-label>
+            <input #szInput (keyup)="0" matInput placeholder="Depth" aria-label="Depth" [formControl]="depthCtrl"
+              [(ngModel)]="DEPTH" (ngModelChange)="GETDEPTHNAME()" [matAutocomplete]="autoDepth" />
+            <mat-autocomplete #autoDepth="matAutocomplete">
+              <mat-option *ngFor="let depth of filtereddepths | async" [value]="depth.name">
+                <span>{{depth.name}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Diameter</mat-label>
+            <input #szInput (keyup)="0" matInput placeholder="Diameter" aria-label="Diameter"
+              [formControl]="diameterCtrl" [(ngModel)]="DIAMETER" (ngModelChange)="GETDIAMETERNAME()"
+              [matAutocomplete]="autoDiameter" />
+            <mat-autocomplete #autoDiameter="matAutocomplete">
+              <mat-option *ngFor="let diameter of filtereddiameters | async" [value]="diameter.name">
+                <span>{{diameter.name}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Table</mat-label>
+            <input #szInput (keyup)="0" matInput placeholder="Table" aria-label="Table" [formControl]="tableCtrl"
+              [(ngModel)]="TABLE" (ngModelChange)="GETTABLENAME()" [matAutocomplete]="autoTable" />
+            <mat-autocomplete #autoTable="matAutocomplete">
+              <mat-option *ngFor="let table of filteredtables | async" [value]="table.name">
+                <span>{{table.name}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ratio</mat-label>
+            <input #szInput (keyup)="0" matInput placeholder="Ratio" aria-label="Ratio" [formControl]="ratioCtrl"
+              [(ngModel)]="RATIO" (ngModelChange)="GETRATIONAME()" [matAutocomplete]="autoRatio"
+              [disabled]="disabled" />
+            <mat-autocomplete #autoRatio="matAutocomplete" [disabled]="disabled">
+              <mat-option *ngFor="let ratio of filteredratios | async" [value]="ratio.name">
+                <span>{{ratio.name}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+      </ul>
+
+
+    </div>
+
+  </div>
+
+
+  <div class="rap-calc ml-2">
+
+    <div class="calc-input-box">
+      <span class="calc-input"> {{ input }} </span>
+      <!-- <mat-icon class="calc-icon" (click)="disabled == false?clear():''" matTooltip='Clear'
+        matTooltipClass="custom-tooltip" matSuffix>loop
+      </mat-icon> -->
+      <!-- <button class="btn theme-btn"> -->
+      <i class="icon-refresh mat-icon" matTooltip='Clear' matTooltipClass="custom-tooltip"
+        (click)="disabled == false?clear():''" matSuffix></i>
+      <!-- </button> -->
+    </div>
+
+    <div class="calc__row">
+      <button class="flex__btn calc__btn" (click)="pressNum('1')" [disabled]="disabled"><span
+          class="flex__btn-text">1</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('2')" [disabled]="disabled"><span
+          class="flex__btn-text">2</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('3')" [disabled]="disabled"><span
+          class="flex__btn-text">3</span></button>
+    </div>
+    <div class="calc__row">
+      <button class="flex__btn calc__btn" (click)="pressNum('4')" [disabled]="disabled"><span
+          class="flex__btn-text">4</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('5')" [disabled]="disabled"><span
+          class="flex__btn-text">5</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('6')" [disabled]="disabled"><span
+          class="flex__btn-text">6</span></button>
+    </div>
+    <div class="calc__row">
+      <button class="flex__btn calc__btn" (click)="pressNum('7')" [disabled]="disabled"><span
+          class="flex__btn-text">7</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('8')" [disabled]="disabled"><span
+          class="flex__btn-text">8</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('9')" [disabled]="disabled"><span
+          class="flex__btn-text">9</span></button>
+    </div>
+    <div class="calc__row">
+      <button class="flex__btn calc__btn" (click)="pressNum('.')" [disabled]="disabled"><span
+          class="flex__btn-text">.</span></button>
+      <button class="flex__btn calc__btn" (click)="pressNum('0')" [disabled]="disabled"><span
+          class="flex__btn-text">0</span></button>
+      <button class="flex__btn calc__btn" (click)="backSpace()" [disabled]="disabled"><span
+          class="flex__btn-text">&#8592;</span></button>
+    </div>
+  </div>
+
+
+  <div class="total-calc">
+    <mat-form-field appearance="outline">
+      <mat-label>Pol Crt</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="POLCARAT" placeholder="Pol Crt" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Rou Crt</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="ROUCARAT" placeholder="Rou Crt" [disabled]="disabled" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tot Amt</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="TOTAMT" placeholder="Tot Amt" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Per Crt</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="PERCARAT" placeholder="Per Crt" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Net Per</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="NETPER" placeholder="Net Per" disabled />
+    </mat-form-field>
+  </div>
+
+  <div class="grid-1">
+    <div class="grid-radio">
+      <mat-radio-group aria-label="Select an option" class="radio-grp" [(ngModel)]="RAPARR">
+        <mat-radio-button style="margin-left: .5rem;" (change)="radioChange($event)" class="radio-btn"
+          *ngFor="let rap of rapArray" [value]="rap.name"> {{ rap.name }}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <ag-grid-angular style="width: 100%; height: 90%" class="ag-theme-alpine" [defaultColDef]="PricedefaultColDef"
+      [columnDefs]="PricecolumnDefs" (gridReady)="onPriceGridReady($event)" [animateRows]="true">
+    </ag-grid-angular>
+  </div>
+
+  <div class="grid-2">
+    <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+    </ag-grid-angular>
+  </div>
+  <div class="grid-3">
+    <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [defaultColDef]="SizedefaultColDef"
+      [columnDefs]="SizecolumnDefs" (gridReady)="onGridSizeReady($event)" [animateRows]="true"
+      [rowSelection]="SizerowSelection">
+    </ag-grid-angular>
+  </div>
+</div>
+
+<div class="dropend">
+  <div class="mix-bar">
+    <button class="btn theme-btn mx-btn plan-btn" href="#" role="button" id="planDropdown" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      Plan
+    </button>
+
+    <ul class="dropdown-menu side-pop" aria-labelledby="planDropdown">
+      <div class="plan-dropup">
+        <mat-chip-list class="flex-div">
+          <span class="flex__btn-text">Plan</span>
+          <mat-chip *ngFor="let plan of PlanArray" class="flex__btn"
+            (click)="disabled == false?SelectItem(plan,'PlanArray'):''" [selected]="plan.selected" [disabled]="disabled"
+            data-bs-dismiss="dropdown">
+            <span class="flex__btn-text">{{ plan.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </ul>
+
+    <button class="btn theme-btn mx-btn tag-btn" href="#" role="button" id="tagDropdown" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      Tag
+    </button>
+
+    <ul class="dropdown-menu side-pop" aria-labelledby="tagDropdown">
+      <div class="tag-dropup">
+        <mat-chip-list class="flex-div">
+          <span class="flex__btn-text">Tag</span>
+          <mat-chip *ngFor="let tag of TagArray" class="flex__btn"
+            (click)="tagdisabled == false ? SelectItem(tag,'TagArray'):''" [selected]="tag.selected"
+            [disabled]="tagdisabled">
+            <span class="flex__btn-text">{{ tag.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </ul>
+  </div>
+
+</div>
+<div class="dropup">
+  <div class="bar-2">
+
+
+
+    <!-- <button class="btn theme-btn mx-btn inc-btn" href="#" role="button" id="inclusionDropdown" data-bs-toggle="dropdown"
+      aria-expanded="false" data-bs-auto-close="outside">
+      Inclusion
+    </button> -->
+
+    <ul class="dropup dropdown-menu drop-col" aria-labelledby="inclusionDropdown">
+      <div class="inclusion-dropup">
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Cr Open</span>
+          <mat-chip *ngFor="let cro of crownOpenArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(cro,'crownOpenArray'):''" [selected]="cro.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ cro.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Culet</span>
+          <mat-chip *ngFor="let cul of culetArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(cul,'culetArray'):''" [selected]="cul.selected" [disabled]="disabled">
+            <span class="flex__btn-text">{{ cul.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Ext Facet</span>
+          <mat-chip *ngFor="let ext of extraFacetArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(ext,'extraFacetArray'):''" [selected]="ext.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ ext.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Eye Clean</span>
+          <mat-chip *ngFor="let ec of eyeCleanArray" class="inc col-wid-ec flex__btn"
+            (click)="disabled == false?SelectItem(ec,'eyeCleanArray'):''" [selected]="ec.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ ec.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Grd Open</span>
+          <mat-chip *ngFor="let grdl of gridleOpenArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(grdl,'gridleOpenArray'):''" [selected]="grdl.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ grdl.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Graining</span>
+          <mat-chip *ngFor="let grn of grainingArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(grn,'grainingArray'):''" [selected]="grn.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ grn.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Luster</span>
+          <mat-chip *ngFor="let lst of lusterArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(lst,'lusterArray'):''" [selected]="lst.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ lst.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Milky</span>
+          <mat-chip *ngFor="let mlk of milkyArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(mlk,'milkyArray'):''" [selected]="mlk.selected" [disabled]="disabled">
+            <span class="flex__btn-text">{{ mlk.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Natural</span>
+          <mat-chip *ngFor="let nat of naturalArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(nat,'naturalArray'):''" [selected]="nat.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ nat.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Pav Open</span>
+          <mat-chip *ngFor="let pav of pavOpenArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(pav,'pavOpenArray'):''" [selected]="pav.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ pav.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Side</span>
+          <mat-chip *ngFor="let side of sideArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(side,'sideArray'):''" [selected]="side.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ side.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Side Blk</span>
+          <mat-chip *ngFor="let sb of sideBlackArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(sb,'sideBlackArray'):''" [selected]="sb.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ sb.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Side Op</span>
+          <mat-chip *ngFor="let so of sideOpenArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(so,'sideOpenArray'):''" [selected]="so.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ so.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Table</span>
+          <mat-chip *ngFor="let table of tableArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(table,'tableArray'):''" [selected]="table.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ table.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Table Blk</span>
+          <mat-chip *ngFor="let tb of tableBlackArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(tb,'tableBlackArray'):''" [selected]="tb.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ tb.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Table Op</span>
+          <mat-chip *ngFor="let to of tableOpenArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(to,'tableOpenArray'):''" [selected]="to.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ to.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+        <mat-chip-list class="flex-div flex-col">
+          <span class="flex__btn-text">Red Spot</span>
+          <mat-chip *ngFor="let rspt of RSpotArray" class="inc col-wid flex__btn"
+            (click)="disabled == false?SelectItem(rspt,'RSpotArray'):''" [selected]="rspt.selected"
+            [disabled]="disabled">
+            <span class="flex__btn-text">{{ rspt.name }}</span>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </ul>
+
+    <mat-form-field appearance="outline" class="version-select" hidden>
+      <mat-label>Version</mat-label>
+      <input matInput placeholder="Version" aria-label="Version" [matAutocomplete]="autoV" [formControl]="vCtrl"
+        [(ngModel)]="V_CODE" />
+      <mat-autocomplete #autoV="matAutocomplete">
+        <mat-option *ngFor="let v of filteredVs | async" [value]="v.code">
+          <span>{{ v.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Lot</mat-label>
+      <input matInput placeholder="Lot" aria-label="Lot" [matAutocomplete]="autoLOT" [formControl]="lotCtrl"
+        [(ngModel)]="L_CODE" (blur)="CHECKPER('BrkEntComponent')" (keydown.enter)="FOCUSNEXT()" (blur)="ClearSRNO()" />
+      <mat-autocomplete #autoLOT="matAutocomplete">
+        <mat-option *ngFor="let lot of filteredLots | async" [value]="lot.code">
+          <span>{{ lot.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="version-input">
+      <mat-label>SR No.</mat-label>
+      <input matInput #rapcalcsrno (blur)='GetPrd();' (ngModelChange)="CHECKPER('BrkEntComponent')" [(ngModel)]="SRNO"
+        placeholder="SR No." [disabled]="DISABLELOTSRNO" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="version-input">
+      <mat-label>Tag</mat-label>
+      <input matInput [(ngModel)]="TAG" placeholder="Tag" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input matInput placeholder="Employee" aria-label="Employee" [matAutocomplete]="autoEMP" [formControl]="empCtrl"
+        [(ngModel)]="EMP_CODE" (blur)="UPDATEGRID();FILLDATA()" />
+      <mat-autocomplete #autoEMP="matAutocomplete">
+        <mat-option *ngFor="let emp of filteredemps | async" [value]="emp.code">
+          <span>{{ emp.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+
+    <div class="btn-grp-2">
+
+      <!-- <button class="btn theme-btn mx-btn">Cancel</button> -->
+      <button class="btn theme-btn mx-btn" (click)="CLEAR()">Clear</button>
+      <button class="btn theme-btn mx-btn" (click)="SAVE()">Save</button>
+      <button class="btn theme-btn mx-btn" (click)="COPY()">Copy</button>
+      <button class="btn theme-btn mx-btn np-btn" (click)="AddRow()">New Plan</button>
+      <button *ngIf="CHECKPER('BrkEntComponent')" class="btn theme-btn mx-btn be-btn" (click)="BREAKINGENTRY()">Breking
+        Entry</button>
+      <button class="btn theme-btn mx-btn" (click)="FPrint()">F Print</button>
+      <button class="btn theme-btn mx-btn" (click)="PPrint()">P Print</button>
+    </div>
+  </div>
+</div>
+
+<ag-grid-angular style="width: 100%; height: 13.5rem" class="ag-theme-alpine" [defaultColDef]="MaindefaultColDef"
+  [columnDefs]="MaincolumnDefs" (gridReady)="MainonGridReady($event)" [animateRows]="true" [rowSelection]="rowSelection"
+  (rowClicked)='onGridRowClicked($event)' [getRowStyle]="getRowStyle" (selectionChanged)="onSelectionChanged($event)">
+</ag-grid-angular>

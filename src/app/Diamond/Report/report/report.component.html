@@ -1,0 +1,103 @@
+<div class="report__container">
+  <div class="report__list" *ngIf="SHOW_RPT_LIST">
+    <ul>
+      <!-- <span>Final Report</span> -->
+      <li *ngFor="let rpt of RptList" class="RPT">
+        <a (click)="ReportClick(rpt.SP_NAME, rpt.RPT_NAME);REPORT_NAME=rpt.REP_NAME" id="act-rpt">
+          {{rpt.REP_NAME}}
+        </a>
+      </li>
+    </ul>
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput placeholder="Password" autocomplete="off"
+        [(ngModel)]="PASSWORD" (ngModelChange)="CHANGEPASSWORD();">
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="param__list" id="param__list" *ngIf="SHOW_PRMS">
+    <form (ngSubmit)="onSubmit(ReportForm)" #ReportForm="ngForm">
+      <button class="btn theme-btn" type="submit" name="submit" *ngIf="Report_arr.length > 0">Submit</button>
+      <table>
+        <tr *ngFor="let itemMain of FormColumns">
+          <p class="groupkey">{{itemMain.GROUPKEY}}</p>
+          <!-- <p>----------------------</p> -->
+          <td>
+            <div *ngFor="let formdata of itemMain.Data;">
+              <p class="label">{{FindLableName(formdata.key)}}</p>
+              <ng-container *ngIf="FindFieldDataType(formdata.key) == 'varchar'">
+                <!-- 7990 less then auto -->
+                <!-- if datatable ka lookupmast null or "" hoy to je sadu muk vu -->
+                <!-- 7990  gre then F1 -->
+
+                <div *ngIf="FindStnLen(formdata.key) < 7990">
+                  <div *ngIf="FindNormalTextbox(formdata.key)">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <input matInput [(ngModel)]="formdata.value" [name]="formdata.key" [id]="formdata.value">
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="!FindNormalTextbox(formdata.key)">
+                    <div *ngIf="FindLookUPString(formdata.key)">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="formdata.value" [name]="formdata.key" [id]="formdata.value">
+                          <mat-option *ngFor="let item of GetLookUPStringData(formdata.key)" [value]="item">
+                            {{item}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div *ngIf="!FindDataSet(formdata.key)">
+                      <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="formdata.value" [name]="formdata.key" [id]="formdata.value">
+                          <mat-option *ngFor="let item of GetAutoCompleteDataSet(formdata.key)" [value]="item">
+                            {{item}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="FindStnLen(formdata.key) > 7990">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <input matInput type="text" [(ngModel)]="formdata.value" [name]="formdata.key" [id]="formdata.value"
+                      autocomplete="off">
+                  </mat-form-field>
+                  <input type="button" value="..." class="btn theme-btn dialog"
+                    (click)="ReportHelpList(formdata.key,itemMain.GROUPKEY,formdata.value)">
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="FindFieldDataType(formdata.key) == 'numeric' || FindFieldDataType(formdata.key) == 'int' ">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input matInput type="number" [(ngModel)]="formdata.value" [name]="formdata.key"
+                    [id]="formdata.value">
+                </mat-form-field>
+              </ng-container>
+              <ng-container *ngIf="FindFieldDataType(formdata.key) == 'datetime'">
+                <mat-form-field appearance="outline" (click)="DT.open()">
+                  <input matInput [matDatepicker]="DT" [readonly]="true" [(ngModel)]="formdata.value"
+                    [name]="formdata.key" [id]="formdata.value">
+                  <!-- <mat-datepicker-toggle matSuffix [for]="DT"></mat-datepicker-toggle> -->
+                  <mat-datepicker #DT></mat-datepicker>
+                </mat-form-field>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+        <div class="SPRPT" *ngIf="SPRPT">
+          <p> SP Name: {{SP_NAME}}</p>
+          <p> RPT Name: {{RPT_NAME}}</p>
+        </div>
+      </table>
+
+    </form>
+
+    <!-- <div *ngFor="let itemMain of Group_arr">
+      {{itemMain.GROUPKEY}}
+      <div *ngFor="let itemSub of itemMain.Data">
+        {{itemSub.key}}
+      </div>
+    </div> -->
+
+  </div>
+</div>

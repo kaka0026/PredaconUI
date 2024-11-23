@@ -1,0 +1,28 @@
+.prc-inw__container-1 {
+  height: 85vh;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-gap: 0.5rem;
+}
+.prc-inw__container-2 {
+  height: 85vh;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
+  grid-gap: 0.5rem;
+}
+
+.prc-inw-r-btn:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.btn-grp-2 {
+  justify-self: end;
+}
+
+.btn-grp-2 > button {
+  display: inline-block;
+}

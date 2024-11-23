@@ -1,0 +1,6 @@
+:host .radio-btn:not(:last-child) {
+  margin-right: 0.5rem;
+}
+:host .btn-grp {
+  grid-column: -3 / -1;
+}

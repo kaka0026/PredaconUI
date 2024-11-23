@@ -1,0 +1,41 @@
+<div class="prc-ret-prnt__container">
+  <div class="mast__r-group">
+    <mat-radio-group class="r-group" [(ngModel)]="TPROC_CODE" (change)="clear()">
+      <mat-radio-button class="rad-btn" *ngFor="let item of PRArr" [value]="item.PRC_CODE">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>PNT</mat-label>
+      <input matInput type="number" [(ngModel)]="PNT" name="PNT" autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="R_DATE">
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>RNO</mat-label>
+      <input matInput type="number" [(ngModel)]="RNO" name="RNO" autocomplete="off" (keypress)="tagFillCheck($event)" />
+    </mat-form-field>
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Confirm' matTooltipClass="custom-tooltip"
+        (click)="Save()">Confirm</button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+    </ag-grid-angular>
+  </div>
+  <!-- <div class="btn-grp">
+    <button class="btn theme-btn" matTooltip='Print' matTooltipClass="custom-tooltip" (click)="PRINT()">
+      <i class="icon-print mat-icon"></i>
+
+    </button>
+  </div> -->
+</div>

@@ -1,0 +1,21 @@
+<div class="row-1">
+  <p>Recieve</p>
+
+  <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save();">
+    <i class="icon-save mat-icon"></i>
+  </button>
+
+  <button class="btn theme-btn" matTooltip='Reload Grid' matTooltipClass="custom-tooltip" (click)="LoadGridData();">
+    <i class="icon-refresh mat-icon"></i>
+  </button>
+
+  <button class="btn theme-btn" matTooltip='Close' matTooltipClass="custom-tooltip"
+    (click)="closeChild('DashRecieveComponent')">
+    <i class="icon-close mat-icon"></i>
+  </button>
+
+</div>
+
+<ag-grid-angular style="width: 100%; height: 90%;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+  [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [rowSelection]="rowSelection" [animateRows]="true">
+</ag-grid-angular>

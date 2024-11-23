@@ -1,0 +1,46 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Pnt</mat-label>
+      <input matInput type="number" name="PNT" autocomplete="off" [(ngModel)]="PNT" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" (click)="LD1.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="LD1" [readonly]="true" [(ngModel)]="M_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="LD1"></mat-datepicker-toggle>
+      <mat-datepicker #LD1></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Slip No</mat-label>
+      <input matInput type="number" name="PNT" autocomplete="off" [(ngModel)]="MNO"
+        (keypress)="LoadGridData($event);" />
+    </mat-form-field>
+
+  </div>
+  <div>
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+    </ag-grid-angular>
+    <div class="btn-wrapper">
+      <mat-form-field class='mt-2 password' appearance="outline">
+        <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+          (ngModelChange)="CHANGEPASSWORD();" />
+        <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+      </mat-form-field>
+      <div class="btn-wrappwe--sub">
+        <button class="btn theme-btn" matTooltip='Barcode' matTooltipClass="custom-tooltip">
+          <i class="icon-barcode mat-icon"></i>
+        </button>
+        <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()">
+          <i class="icon-save mat-icon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

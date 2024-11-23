@@ -1,0 +1,227 @@
+<div class="brk-ent__container">
+  <div class="brk-ent__container--row-1">
+    <mat-radio-group [(ngModel)]="TPROC_CODE" class="rad-grp" (change)="SETPDET()">
+      <mat-radio-button *ngFor="let item of PRArr" [value]="item.PRC_CODE" class="rad-btn">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="brk-ent__container--row-2">
+    <div class="grid-col-1">
+
+      <mat-form-field appearance="outline">
+        <mat-label>L Code</mat-label>
+        <input #LOTInput matInput name="L Code" aria-label="L Code" [matAutocomplete]="autoLOT" [formControl]="LOTCtrl"
+          [(ngModel)]="L_CODE" />
+        <mat-autocomplete #autoLOT="matAutocomplete">
+          <mat-option (onSelectionChange)="LOTInput.value !=undefined && onEnterLOT($event)"
+            *ngFor="let lot of filteredLOTs | async" [value]="lot.CODE">
+            <span class="s-right">{{lot.CODE}}</span> | <span class="s-left">{{lot.NAME}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>L Name</mat-label>
+        <input matInput type="text" name="L Name" [(ngModel)]="L_NAME" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>L Carat</mat-label>
+        <input matInput type="number" [ngModel]="L_CARAT | setFloat:3" name="L Carat" [(ngModel)]="L_CARAT"
+          autocomplete="off" disabled [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="L_CARAT = $event" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>L Pnt</mat-label>
+        <input matInput type="text" [(ngModel)]="PNT" name="L Pnt" [(ngModel)]="PNT" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>No</mat-label>
+        <input matInput type="number" [(ngModel)]="NO" placeholder="" (keydown.enter)="FILLGRIDDATABYNO()"
+          autocomplete="off" [disabled]="disabled" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>SrNo</mat-label>
+        <input matInput type="number" [(ngModel)]="SRNO" name="SrNo" autocomplete="off" [disabled]="enabled" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tag</mat-label>
+        <input matInput type="text" [(ngModel)]="TAG" name="Tag" (keydown.enter)="FILLCMBDATA()" autocomplete="off"
+          [disabled]="enabled" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" [hidden]="!BTAGVISIBLE">
+        <mat-label>BTag</mat-label>
+        <input matInput type="text" [(ngModel)]="BTAG" name="BTag" (keydown.enter)="GRIDFILL()" autocomplete="off"
+          [disabled]="enabled" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>LDetId</mat-label>
+        <mat-select [(ngModel)]="LDETID" (ngModelChange)="getdetidname()">
+          <mat-option *ngFor="let item of DETIDArr" [value]="item.code">
+            {{item.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>LDetNo</mat-label>
+        <mat-select [(ngModel)]="LDETNO" (ngModelChange)="getdetnoname()">
+          <mat-select-trigger>{{LDETNO ? LDETNO : 'LDetNo'}}</mat-select-trigger>
+          <mat-option *ngFor="let item of DETNOArr" [value]="item.code">
+            {{item.code}} || {{item.value}} || {{item.emp}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-checkbox class="example-margin" [(ngModel)]="NEWPLAN" [hidden]="CHECKBOCVISIBLE">New Plan</mat-checkbox>
+
+      <mat-form-field appearance="outline" class="emp">
+        <mat-label>Employee</mat-label>
+        <mat-select [(ngModel)]="MARKEREMPCODE" (ngModelChange)="getmarkername()" disabled>
+          <mat-option *ngFor="let item of EMPARR" [value]="item.code">
+            {{item.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" aria-disabled="true" class="emp-name">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="MARKEREMPNAME" name="Name" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="emp-empty">
+        <mat-label>GRP</mat-label>
+        <input matInput type="text" [(ngModel)]="GRP" name="" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="party">
+        <mat-label>Party</mat-label>
+        <mat-select [(ngModel)]="PARTYCODE" (ngModelChange)="getpartyname()" disabled>
+          <mat-option *ngFor="let item of PARTYARR" [value]="item.code">
+            {{item.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" aria-disabled="true" class="party-name">
+        <mat-label>Name</mat-label>
+        <input [(ngModel)]="PARTYNAME" matInput name="" autocomplete="off" disabled>
+      </mat-form-field>
+
+    </div>
+
+    <div class="grid-col-2">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Manager</mat-label>
+        <mat-select [(ngModel)]="MANAGERCODE" (ngModelChange)="getmanagername()" disabled>
+          <mat-option *ngFor="let item of ManagerArr" [value]="item.code">
+            {{item.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" aria-disabled="true">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="MANAGERNAME" name="Name" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Employee</mat-label>
+        <mat-select [(ngModel)]="EMPCODE" (ngModelChange)="getemployeename()" disabled>
+          <mat-option *ngFor="let item of opratorArr" [value]="item.code">
+            {{item.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" aria-disabled="true">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="EMPNAME" name="Name" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field class="pdate" appearance="outline">
+        <mat-label>P Date </mat-label>
+        <input matInput [matDatepicker]="PD" [(ngModel)]="PDATE" disabled>
+        <mat-datepicker-toggle matSuffix [for]="PD"></mat-datepicker-toggle>
+        <mat-datepicker #PD></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="ptime">
+        <mat-label>P Time</mat-label>
+        <input matInput [(ngModel)]="PTIME" name="P Time" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <!-- <mat-radio-group aria-label="Select an option" [(ngModel)]="RAPTYPE" class="radio-grp">
+        <mat-radio-button *ngFor="let item of RAPTArray" [value]="item.code" class="radio-btn">{{item.name}}
+        </mat-radio-button>
+      </mat-radio-group> -->
+
+      <mat-form-field appearance="outline" aria-disabled="true" class="diff-dol">
+        <mat-label>Diff. $</mat-label>
+        <input matInput type="number" [ngModel]="DIFFDOL | setFloat:2" [ngModelOptions]="{ updateOn: 'blur' }"
+          (ngModelChange)="DIFFDOL = $event" name="Diff. $" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="rough">
+        <mat-label>Rough</mat-label>
+        <input matInput type="number" [(ngModel)]="ROUGH" name="Rough" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="remark">
+        <mat-label>Remark</mat-label>
+        <mat-select [(ngModel)]="REMARKCODE" (ngModelChange)="getremarkname()">
+          <mat-option *ngFor="let item of RamarkArr" [value]="item.code">
+            {{item.code}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" aria-disabled="true" class="remark-name">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="REMARKNAME" name="Name" autocomplete="off" disabled />
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" class="diff-carat">
+        <mat-label>Diff. Carat</mat-label>
+        <input matInput type="number" [ngModel]="DIFFCARAT | setFloat:3" name="Diff. Carat" autocomplete="off"
+          disabled />
+      </mat-form-field>
+
+      <mat-form-field class='password' appearance="outline">
+        <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+          (ngModelChange)="CHANGEPASSWORD();" />
+        <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+      </mat-form-field>
+
+      <div class="btns">
+        <button class="btn theme-btn new-btn" (click)="NEW()">New</button>
+        <button class="btn theme-btn save-btn" (click)="SAVE()">Save</button>
+        <button class="btn theme-btn prnt-btn" (click)="PRINT()">Print</button>
+      </div>
+
+    </div>
+  </div>
+  <div class="brk-ent__container--row-3">
+    <!-- <jqxGrid #grid1 (onCellendedit)="myGridOnCellEndEdit1($event)" [height]="175" [width]="getWidth1()"
+      [source]="dataAdapter1" [columns]="columns1" [editable]="editable1" [selectionmode]="'singlecell'"
+      (onCellendedit)="myGridOnCellEndEdit1($event)">
+    </jqxGrid> -->
+    <ag-grid-angular style="height: 200px; width: 100%;" class="ag-theme-alpine" [columnDefs]="columnDefs1"
+      [frameworkComponents]="frameworkComponents1" (gridReady)="onGridReady1($event)"
+      (cellEditingStopped)="cellEditingStopped1($event)" (cellValueChanged)="onCellValueChanged1($event)"
+      (rowClicked)='onGridRowClicked1($event)'>
+    </ag-grid-angular>
+  </div>
+  <div class="brk-ent__container--row-4">
+    <ag-grid-angular style="height: 200px; width: 100%;" class="ag-theme-alpine" [columnDefs]="columnDefs2"
+      [frameworkComponents]="frameworkComponents2" (gridReady)="onGridReady2($event)"
+      (cellEditingStopped)="cellEditingStopped2($event)" (cellValueChanged)="onCellValueChanged2($event)"
+      (rowClicked)='onGridRowClicked2($event)'>
+    </ag-grid-angular>
+    <!-- <jqxGrid #grid2 (onCellEndEdit)="myGridOnCellEndEdit2($event)" [height]="175" [width]="getWidth2()"
+      [source]="dataAdapter2" [columns]="columns2" [editable]="editable2" [selectionmode]="'singlecell'"
+      (onCellendedit)="myGridOnCellEndEdit2($event)">
+    </jqxGrid> -->
+  </div>
+</div>

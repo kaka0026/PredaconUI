@@ -1,0 +1,66 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Type *</mat-label>
+      <input matInput type="text" name="Type" [matAutocomplete]="autoTYP" [formControl]="typCtrl" [(ngModel)]="I_TYPE"
+        (blur)="LoadGridData()" />
+      <mat-autocomplete #autoTYP="matAutocomplete">
+        <mat-option *ngFor="let shp of filteredTyps | async" [value]="shp.code">
+          <span>{{ shp.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Code *</mat-label>
+      <input matInput type="number" name="Code" autocomplete="off" [(ngModel)]="I_CODE" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Name *</mat-label>
+      <input matInput type="text" name="Name" autocomplete="off" [(ngModel)]="I_NAME"
+        (ngModelChange)="I_NAME = $event.toUpperCase()" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Short Name *</mat-label>
+      <input matInput type="text" name="Short Name" autocomplete="off" [(ngModel)]="I_SHORTNAME"
+        (ngModelChange)="I_SHORTNAME = $event.toUpperCase()" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Import Name</mat-label>
+      <input matInput type="text" name="Import Name" autocomplete="off" [(ngModel)]="I_IMPORTNAME"
+        (ngModelChange)="I_IMPORTNAME = $event.toUpperCase()" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Per(%) </mat-label>
+      <input matInput type="number" name="Percentage" autocomplete="off" [ngModel]="I_PER | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_PER = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Order *</mat-label>
+      <input matInput type="text" type="number" name="Order *" autocomplete="off" [(ngModel)]="I_ORD" />
+    </mat-form-field>
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()">
+        <i class="icon-save mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <i class="icon-refresh mat-icon"></i>
+      </button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

@@ -1,0 +1,71 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Type *</mat-label>
+      <input matInput name="Type" aria-label="Type *" [matAutocomplete]="autoTYP" [formControl]="typCtrl"
+        [(ngModel)]="SZ_TYPE" />
+      <mat-autocomplete #autoTYP="matAutocomplete">
+        <mat-option *ngFor="let sft of filteredTyps | async" [value]="sft">
+          <span>{{ sft }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Code *</mat-label>
+      <input matInput type="number" name="Code" autocomplete="off" [(ngModel)]="SZ_CODE"
+        (ngModelChange)="CODECHANGE()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>F-Size *</mat-label>
+      <input type="number" name="F-Size" autocomplete="off" [ngModel]="F_SIZE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_SIZE = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>T-Size *</mat-label>
+      <input type="number" name="T-Size" autocomplete="off" [ngModel]="T_SIZE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_SIZE = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Group</mat-label>
+      <input type="text" name="Group Name" autocomplete="off" [(ngModel)]="SZ_GROUP"
+        (ngModelChange)="SZ_GROUP = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>OSize Code</mat-label>
+      <input type="number" name="OSize Code" autocomplete="off" [(ngModel)]="OSZ_CODE" />
+    </mat-form-field>
+
+
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <mat-icon> refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

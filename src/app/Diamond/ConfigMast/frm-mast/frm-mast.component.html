@@ -1,0 +1,9 @@
+<ag-grid-angular style="width: 100%; height: calc(95vh - 130px);" class="ag-theme-alpine"
+  [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+  (rowClicked)='onGridRowClicked($event)'>
+</ag-grid-angular>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

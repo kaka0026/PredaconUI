@@ -1,0 +1,89 @@
+.grd-ent__container {
+  display: grid;
+  grid-gap: 0.5rem;
+}
+
+.grd-ent__container--row-1 {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+:host::ng-deep .grd-ent__container--row-1 > .mat-form-field {
+  width: 8rem;
+}
+
+.grd-ent__container--row-2 {
+  display: flex;
+  gap: 1rem;
+}
+
+.grd-ent__container--col {
+  display: flex;
+  flex-direction: column;
+}
+
+.grd-ent__fields {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.grd-ent-grid {
+  height: 100%;
+  margin-top: 1rem;
+}
+
+:host::ng-deep .full-width > mat-form-field {
+  width: 100%;
+}
+
+.multi {
+  display: flex;
+  gap: 0.5rem;
+}
+
+:host::ng-deep .multi > .mat-form-field {
+  width: 6rem;
+}
+
+:host::ng-deep .multi-3 > mat-form-field {
+  width: 33%;
+}
+
+.chkbxs {
+  width: inherit;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.grd-ent__container--row-3 {
+  display: flex;
+  gap: 0.5rem;
+}
+
+:host::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+
+:host::ng-deep .mat-form-field-label-wrapper {
+  top: -0.7em;
+}
+
+:host::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+
+:host::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0;
+}
+
+:host .btn.theme-btn {
+  padding: 0px 9px;
+}

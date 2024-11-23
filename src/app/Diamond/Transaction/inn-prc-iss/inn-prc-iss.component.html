@@ -1,0 +1,112 @@
+<div class="inn-prc-iss__container">
+  <div class="mast__r-group">
+    <mat-radio-group [(ngModel)]="TPROC_CODE" class="r-group"
+      (change)="FillSubPrc(); FillManager(); CMBHideShow(); clear();">
+      <mat-radio-button class="rad-btn" *ngFor="let item of ISSArr" [value]="item.PRC_CODE">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__r-group">
+    <mat-radio-group [(ngModel)]="PRC_TYP" class="r-group" (change)="CMBHideShow(); clear();">
+      <mat-radio-button class="rad-btn" *ngFor="let item of ISSINWDArr" [value]="item.PRC_CODE"
+        [checked]="item.checked">
+        {{item.PRC_NAME}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="I_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>INo</mat-label>
+      <input matInput type="number" name="INo" autocomplete="off" [(ngModel)]="INO" (blur)="LoadGridData()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Lot No</mat-label>
+      <input matInput #lcode name="Lot No" autocomplete="off" [(ngModel)]="L_CODE" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>SrNo</mat-label>
+      <input matInput type="number" name="SrNo" autocomplete="off" [(ngModel)]="SRNO" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" autocomplete="off" [(ngModel)]="TAG"
+        (ngModelChange)="TAG = $event.toUpperCase()" (keydown.enter)="IssSave()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="CO_CODE" *ngIf="showTNSN">
+      <mat-label>Tension</mat-label>
+      <input matInput name="Tension" aria-label="Tension" [matAutocomplete]="autoTEN" [formControl]="tenCtrl"
+        [(ngModel)]="TENTION" />
+      <mat-autocomplete #autoTEN="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredTens | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Manager</mat-label>
+      <input matInput name="Manager" aria-label="Manager" [matAutocomplete]="autoM" [formControl]="mCtrl"
+        [(ngModel)]="M_CODE" (ngModelChange)="GETMANEGERNAME()" (blur)="FillEmployee()" />
+      <mat-autocomplete #autoM="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredMs | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="text" autocomplete="off" [(ngModel)]="M_NAME" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="showEMP">
+      <mat-label>Employee</mat-label>
+      <input matInput name="Employee" aria-label="Employee" [matAutocomplete]="autoEMP" [formControl]="empCtrl"
+        [(ngModel)]="EMP_CODE" (ngModelChange)="GETEMPNAME()" />
+      <mat-autocomplete #autoEMP="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredEmps | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="showEMP">
+      <input matInput type="text" autocomplete="off" [(ngModel)]="EMPNAME" disabled />
+    </mat-form-field>
+
+  </div>
+  <div class="mast__container--row-2">
+    <mat-checkbox class="example-margin" [(ngModel)]="ISUPDATE">Update</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="ISROLLING">Urgent Rolling</mat-checkbox>
+
+    <mat-radio-group disabled name="innerprcopList" [(ngModel)]="innPrcIssTime">
+      <mat-radio-button disabled *ngFor="let time of times" (change)="dayNightinnerprc(time)" [value]="time.id"
+        name="opList">
+        {{ time.name }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__container--row-3">
+    <ag-grid-angular style="width: 100%; height: 63vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [pagination]="true" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      [pinnedBottomRowData]="pinnedBottomRowData" [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+  </div>
+  <div class="btn-grp">
+    <button class="btn theme-btn" matTooltip='Print' matTooltipClass="custom-tooltip" (click)="PRINT()">
+      <i class="icon-print mat-icon"></i>
+    </button>
+    <button class="btn theme-btn" matTooltip='Summary' matTooltipClass="custom-tooltip" (click)="SUMMARY()">
+      <i class="icon-summary mat-icon"></i>
+    </button>
+    <!-- </div> -->
+  </div>
+</div>

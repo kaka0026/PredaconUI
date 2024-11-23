@@ -1,0 +1,229 @@
+<div class="pkt-rec__container">
+  <div class="mast__r-group">
+    <mat-radio-group class="r-group" [(ngModel)]="FPROC_CODE" (ngModelChange)="CLEAR(); CHECKPASS();">
+      <mat-radio-button class="rad-btn" *ngFor="let item of RCVArr" [value]="item.PRC_CODE">{{ item.PRC_NAME }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__r-group">
+    <mat-radio-group class="r-group" [(ngModel)]="TPROC_CODE">
+      <mat-radio-button class="rad-btn" *ngFor="let item of RCVINWDArr" [value]="item.PRC_CODE"
+        [checked]="item.checked">
+        {{ item.PRC_NAME }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <section class="pkt-rec__container--fields">
+    <section class="pkt-rec__container--row-1">
+      <mat-form-field appearance="outline">
+        <input matInput type="text" name="L Code" (blur)="keypressLOT($event,L_CODE)" id='pktreclcode'
+          [(ngModel)]="L_CODE" (keypress)="nextenter($event,'srno')" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>L Name</mat-label>
+        <input matInput type="text" name="L Name" [(ngModel)]="L_NAME" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>L Carat</mat-label>
+        <input matInput type="number" name="L Carat" [ngModel]="L_CARAT | setFloat:3" autocomplete="off" disabled
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="L_CARAT = $event" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>PNT</mat-label>
+        <input matInput type="number" name="PNT" [(ngModel)]="PNT" autocomplete="off" disabled />
+      </mat-form-field>
+    </section>
+    <section class="pkt-rec__container--row-1">
+      <mat-form-field appearance="outline">
+        <mat-label>Sr No</mat-label>
+        <input matInput type="number" name="Sr No" (keypress)="nextenter($event, 'tag')" autocomplete="off"
+          [(ngModel)]="SRNO" id="srno" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tag</mat-label>
+        <input matInput type="text" name="Tag" autocomplete="off" [(ngModel)]="TAG"
+          (ngModelChange)="TAG = $event.toUpperCase()" (keydown.enter)="tagFillCheck();" id='tag' />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>I No</mat-label>
+        <input matInput type="number" name="I No" autocomplete="off" [(ngModel)]="INO" tabindex="5" />
+      </mat-form-field>
+
+      <mat-checkbox class="example-margin" [(ngModel)]="BARCODE" style="margin-right: 20px">Barcode</mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="ISCFM">CFM</mat-checkbox>
+    </section>
+    <section class="pkt-rec__container--row-1">
+      <mat-form-field appearance="outline">
+        <mat-label>KATI</mat-label>
+        <input matInput type="text" name="Kati" [matAutocomplete]="autoKATI" [formControl]="katiCtrl" [(ngModel)]="KATI"
+          tabindex="2" />
+        <mat-autocomplete #autoKATI="matAutocomplete">
+          <mat-option *ngFor="let kati of filteredKatis | async" [value]="kati.code">
+            <span>{{ kati.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label></mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled />
+      </mat-form-field>
+    </section>
+    <section class="pkt-rec__container--row-2">
+      <div class="pkt-rec__container--col">
+        <span>Detail</span>
+        <span>Issue</span>
+        <span>Recieve</span>
+      </div>
+      <div class="pkt-rec__container--col">
+        <div>Pcs</div>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [(ngModel)]="I_PCS" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [(ngModel)]="R_PCS" disabled />
+        </mat-form-field>
+      </div>
+
+      <div class="pkt-rec__container--col">
+        <div>Carat</div>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [ngModel]="I_CARAT | setFloat:3"
+            [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_CARAT = $event" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [ngModel]="R_CARAT | setFloat:3"
+            (blur)="CHANGERCARAT()" [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="R_CARAT = $event"
+            id="carat" (keypress)="nextenter($event, 'extra')" />
+        </mat-form-field>
+      </div>
+      <div class="pkt-rec__container--col">
+        <div>Extra</div>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [ngModel]="I_EXTRA | setFloat:3"
+            [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_EXTRA = $event" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [ngModel]="R_EXTRA | setFloat:3"
+            [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="R_EXTRA = $event" id='extra'
+            (blur)="CHANGERCARAT()" (keypress)="nextenter($event, 'gridcarat')" md-select-on-focus />
+        </mat-form-field>
+      </div>
+      <div class="pkt-rec__container--col">
+        <div>Loss/Per</div>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [ngModel]="I_LOSSPER | setFloat:3"
+            [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_LOSSPER = $event" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="" autocomplete="off" [ngModel]="R_LOSSPER | setFloat:3"
+            [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="R_LOSSPER = $event" disabled />
+        </mat-form-field>
+      </div>
+      <div class="pkt-rec__container--col">
+        <div>Date</div>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput name="" autocomplete="off" [(ngModel)]="I_DATE" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput name="" autocomplete="off" [(ngModel)]="R_DATE"
+            (ngModelChange)="R_DATE = $event.toUpperCase()" />
+        </mat-form-field>
+      </div>
+      <div class="pkt-rec__container--col">
+        <div>Time</div>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput name="" autocomplete="off" [(ngModel)]="I_TIME" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput name="" autocomplete="off" [(ngModel)]="R_TIME" />
+        </mat-form-field>
+      </div>
+    </section>
+    <section class="pkt-rec__container--row-3">
+      <div class="pkt-rec-grid"
+        [ngClass]="{'pkt-rec-grid-on': GRIDTOGGLE === true, 'pkt-rec-grid-off': GRIDTOGGLE === false}">
+        <span>Secondary</span>
+        <mat-form-field appearance="outline">
+          <mat-label></mat-label>
+          <input matInput type="number" name="secondary" id="gridcarat" autocomplete="off"
+            (keydown.enter)="ADDDATAGRID()" [(ngModel)]="GRIDCARAT" (blur)="CHANGERCARAT()" />
+          <!-- [ngModel]="GRIDCARAT | setFloat:3" [ngModelOptions]="{ updateOn: 'chnage' }"
+            (ngModelChange)="GRIDCARAT = $event" /> -->
+        </mat-form-field>
+        <jqxGrid #grid (onCellendedit)="myGridOnCellEndEdit($event)" height="300" [width]="getWidth()"
+          [source]="dataAdapter" [columns]="columns" [editable]="true" [selectionmode]="'selectedcell'">
+        </jqxGrid>
+      </div>
+      <div class="pkt-rec__container--row-3-col">
+        <div class="pkt-rec__container--row-1">
+          <div style="min-width: 83px">Second</div>
+
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
+            <input matInput type="number" name="" autocomplete="off" [ngModel]="S_CARAT | setFloat:3"
+              [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="S_CARAT = $event" disabled />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
+            <input matInput type="number" name="" autocomplete="off" [(ngModel)]="S_PCS" disabled />
+          </mat-form-field>
+        </div>
+        <div class="pkt-rec__container--row-1">
+          <div style="min-width: 83px">Con. Carat</div>
+
+          <mat-form-field appearance="outline">
+            <mat-label></mat-label>
+            <input matInput type="number" name="" autocomplete="off" [ngModel]="ConCArat | setFloat:3"
+              [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="ConCArat = $event" disabled />
+          </mat-form-field>
+
+          <mat-radio-group name="opList" fxLayout="column" [(ngModel)]="selectedTime" disabled>
+            <mat-radio-button *ngFor="let time of times" (change)="dayNight(time)" [value]="time.id" name="opList"
+              style="margin-right: 15px">{{
+              time.name
+              }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="btn-grp">
+          <button class="btn theme-btn" matTooltip="Save" matTooltipClass="custom-tooltip" (click)="Save()" id="save">
+            <i class="icon-save mat-icon"></i>
+          </button>
+
+          <button class="btn theme-btn" matTooltip="Delete" matTooltipClass="custom-tooltip" (click)="Delete()">
+            <i class="icon-delete mat-icon"></i>
+          </button>
+
+          <button class="btn theme-btn" matTooltip="Barcode" matTooltipClass="custom-tooltip" (click)="Barcode()">
+            <i class="icon-barcode mat-icon"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+    <mat-form-field class="password" appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHECKPASS()" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{ hide ? "visibility_off" : "visibility" }}
+      </mat-icon>
+    </mat-form-field>
+  </section>
+</div>
+<ngx-spinner>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

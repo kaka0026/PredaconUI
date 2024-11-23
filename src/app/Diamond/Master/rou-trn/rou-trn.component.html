@@ -1,0 +1,99 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Trn No</mat-label>
+      <input matInput type="number" name="Trn No" autocomplete="off" [(ngModel)]="TRNNO" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>R Code *</mat-label>
+      <input matInput type="text" name="R Code" autocomplete="off" [(ngModel)]="R_CODE"
+        (ngModelChange)="R_CODE = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>R Name *</mat-label>
+      <input matInput type="text" name="R Name" autocomplete="off" [(ngModel)]="R_NAME"
+        (ngModelChange)="R_NAME = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>P Code</mat-label>
+      <input matInput type="text" name="P Code" autocomplete="off" [(ngModel)]="P_CODE"
+        (ngModelChange)="P_CODE = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>B Code</mat-label>
+      <input matInput name="B Code" autocomplete="off" [(ngModel)]="B_CODE"
+        (ngModelChange)="B_CODE = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Site</mat-label>
+      <input matInput name="Site" autocomplete="off" [(ngModel)]="SITE" (ngModelChange)="SITE = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Size</mat-label>
+      <input matInput type="number" name="Size" autocomplete="off" [ngModel]="SIZE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="SIZE = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>I Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="I_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>I Carat *</mat-label>
+      <input matInput type="number" name="I Carat" autocomplete="off" [ngModel]="I_CARAT | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_CARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>I Pcs *</mat-label>
+      <input matInput type="number" name="I Pcs" autocomplete="off" [(ngModel)]="I_PCS" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Rate</mat-label>
+      <input matInput type="number" name="Rate" autocomplete="off" [ngModel]="RATE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="RATE = $event" />
+    </mat-form-field>
+
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()">
+        <i class="icon-save mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <i class="icon-refresh mat-icon"></i>
+      </button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 60vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+
+
+
+
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

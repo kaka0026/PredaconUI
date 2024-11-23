@@ -1,0 +1,41 @@
+.dashboard__container {
+  height: 88vh;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.dashboard__container--row-1 {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 0.5rem;
+}
+
+.view-1 {
+  height: 100%;
+
+  display: grid;
+}
+
+.view-2 {
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+
+.view-3 {
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+
+.view > div {
+  height: 100%;
+  width: 100%;
+}

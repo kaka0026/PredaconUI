@@ -1,0 +1,70 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Lab</mat-label>
+      <input matInput name="Lab" aria-label="Lab" [matAutocomplete]="autoLAB" [formControl]="labCtrl"
+        [(ngModel)]="LB_CODE" (ngModelChange)="getLABName()" />
+      <mat-autocomplete #autoLAB="matAutocomplete">
+        <mat-option *ngFor="let lab of filteredLabs | async" [value]="lab.code">
+          <span>{{ lab.code }} </span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Lab Name</mat-label>
+      <input matInput type="text" name="Lab Name" autocomplete="off" [(ngModel)]="LB_NAME" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="LD1.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="LD1" [readonly]="true" [(ngModel)]="OU_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="LD1"></mat-datepicker-toggle>
+      <mat-datepicker #LD1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Slip No</mat-label>
+      <input matInput type="number" name="Slip No" autocomplete="off" [(ngModel)]="SLIPNO" (blur)="LoadGridData()" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>LOT No</mat-label>
+      <input matInput type="number" id="LOTNO" name="Lot No" autocomplete="off" [(ngModel)]="LOTNO" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>SR No</mat-label>
+      <input matInput type="number" name="Sr No" autocomplete="off" [(ngModel)]="SRNO" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" autocomplete="off" [(ngModel)]="TAG" (keypress)="Save($event);" />
+    </mat-form-field>
+
+  </div>
+
+  <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+    [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+  </ag-grid-angular>
+  <div class="btn-wrapper">
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+    <div class="btn-wrappwe--sub">
+      <button class="btn theme-btn" matTooltip='Print' (click)="PRINT()" matTooltipClass="custom-tooltip">
+        <i class="icon-print mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Export' (click)="EXPORT()" matTooltipClass="custom-tooltip">
+        <i class="icon-export mat-icon"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

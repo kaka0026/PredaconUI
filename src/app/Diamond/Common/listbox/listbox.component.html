@@ -1,0 +1,10 @@
+<mat-form-field class="example-full-width lot-2" appearance="outline">
+  <input matInput [(ngModel)]="FILTER" autocapitalize="off" (input)="FILTERDATA()">
+</mat-form-field>
+<ag-grid-angular style="width: 100%; height: calc(95vh - 130px);" class="ag-theme-alpine"
+  [defaultColDef]="defaultColDef" [pagination]="true" [columnDefs]="columnDefs" [rowSelection]="rowSelection"
+  (gridReady)="onGridReady($event)" (selectionChanged)='onSelectionChanged($event)' [animateRows]="true">
+</ag-grid-angular>
+<div class="from-group lot-btn action-btn-exit">
+  <button class="btn theme-btn" (click)="Close()">Exit</button>
+</div>

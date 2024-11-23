@@ -1,0 +1,327 @@
+<aside [ngClass]="{'sidebar-mini': mini == true, 'sidebar-full': mini == false}">
+  <!-- <aside [ngClass]="{'sidebar-mini': mini == true, 'sidebar-full': mini == false}" (mouseenter)="toggleSidebar();"
+  (mouseleave)="toggleSidebar();"> -->
+  <div class="logo">
+    <h2>LOGO</h2>
+  </div>
+
+  <nav role="navigation" class="side-nav">
+
+    <div class="menuItem" *ngIf="CHECKPER('Dashboard')" (click)="AddTab('Dashboard')">
+      <i class="icon-dashboard mat-icon-side"></i>
+      <span>Dashboard</span>
+    </div>
+
+    <!-- <button mat-button [matMenuTriggerFor]="masterMenu" *ngIf="TABVIEW('Master')"> -->
+    <div class="menuItem" [matMenuTriggerFor]="masterMenu" *ngIf="TABVIEW('Master')">
+      <i class="icon-master mat-icon-side"></i>
+      <span>Master</span>
+    </div>
+    <!-- </button> -->
+
+    <mat-menu class="menuList" #masterMenu="matMenu">
+      <li mat-menu-item *ngIf="CHECKPER('QuaMastComponent')" (click)="AddTab('Clarity Master')">
+        Clarity Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ColMastComponent')" (click)="AddTab('Color Master')">
+        Color Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('CutMastComponent')" (click)="AddTab('Cut Master')">
+        Cut Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('EmpMastComponent')" (click)="AddTab('Employee Master')">
+        Employee Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('FloMastComponent')" (click)="AddTab('Fluorescence Master')">
+        Fluorescence Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('IncMastComponent')" (click)="AddTab('Inclusion Master')">
+        Inclusion Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('IncTypeMastComponent')" (click)="AddTab('Inclusion Type Master')">
+        Inclusion Type Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('LotMastComponent')" (click)="AddTab('Lot Master')">
+        Lot Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PartyPrcMastComponent')" (click)="AddTab('Party Process Master')">
+        Party Process Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PrcMastComponent')" (click)="AddTab('Prc Master')">
+        Prc Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ProcMastComponent')" (click)="AddTab('Process Master')">
+        Process Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapLabMastComponent')" (click)="AddTab('RAP Lab Master')">
+        RAP Lab Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RmkMastComponent')" (click)="AddTab('Remark Master')">
+        Remark Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RouTrnComponent')" (click)="AddTab('Rough Master')">
+        Rough Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ShdMastComponent')" (click)="AddTab('Shade Master')">
+        Shade Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ShpMastComponent')" (click)="AddTab('Shape Master')">
+        Shape Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ShftMastComponent')" (click)="AddTab('Shift Master')">
+        Shift Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ShftTrnMastComponent')" (click)="AddTab('Shift Mode')">
+        Shift Mode
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('SizeMastComponent')" (click)="AddTab('Size Master')">
+        Size Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('TenMastComponent')" (click)="AddTab('Tension Master')">
+        Tension Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ViewParaMastComponent')" (click)="AddTab('ViewPara Master')">
+        ViewPara Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('VersionMastComponent')" (click)="AddTab('Version Master')">
+        Version Master
+      </li>
+    </mat-menu>
+
+    <div class="menuItem" [matMenuTriggerFor]="transactionMenu" *ngIf="TABVIEW('Transaction')">
+      <i class="icon-transaction mat-icon-side"></i>
+      <span>Transaction</span>
+    </div>
+
+    <mat-menu #transactionMenu="matMenu">
+      <li mat-menu-item *ngIf="CHECKPER('BrkEntComponent')" (click)="AddTab('Breaking Entry')">
+        Breaking Entry
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PktEntComponent')" (click)="AddTab('Packet Entry')">
+        Packet Entry
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PrcInwComponent')" (click)="AddTab('Process Inward')">
+        Process Inward
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PrcRecIssueComponent')" (click)="AddTab('Process Recieve Issue')">
+        Process Recieve Issue
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PrcRetPrntComponent')" (click)="AddTab('Process Return Print')">
+        Process Return Print
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PktRecComponent')" (click)="AddTab('Packet Recieve')">
+        Packet Recieve
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PrcMakeableComponent')" (click)="AddTab('Process Makeable')">
+        Process Makeable
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('EmpAutoTrnComponent')" (click)="AddTab('Employee Auto Trasnfer')">
+        Employee Auto Trasnfer
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PlanFnlEntComponent')" (click)="AddTab('Plan Final Entry')">
+        Plan Final Entry
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('MakSlipEntComponent')" (click)="AddTab('Makeable Slip Entry')">
+        Makeable Slip Entry
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('InnPrcComponent')" (click)="AddTab('Inner Process Inward')">
+        Inner Process Inward
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('InnPrcIssComponent')" (click)="AddTab('Inner Process Issue')">
+        Inner Process Issue
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('InnPrcRecComponent')" (click)="AddTab('Inner Process Recieve')">
+        Inner Process Recieve
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('InnPrcRetSlipComponent')" (click)="AddTab('Inner Process Retrun Slip')">
+        Inner Process Retrun Slip
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('MakInwComponent')" (click)="AddTab('Makeable Inward')">
+        Makeable Inward
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('GrdEntComponent')" (click)="AddTab('Grading Entry')">
+        Grading Entry
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('GrdOutEntComponent')" (click)="AddTab('Grading Out Entry')">
+        Grading Out Entry
+      </li>
+    </mat-menu>
+
+    <div class="menuItem" mat-button [matMenuTriggerFor]="viewMenu" *ngIf="TABVIEW('View')">
+      <i class="icon-view mat-icon-side"></i>
+      <span>View</span>
+    </div>
+
+    <mat-menu #viewMenu="matMenu">
+      <li mat-menu-item *ngIf="CHECKPER('BrkViewComponent')" (click)="AddTab('Breaking View')">
+        Breaking View
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('InnPktViewComponent')" (click)="AddTab('Inner Packet View')">
+        Inner Packet View
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('InnPrcViewComponent')" (click)="AddTab('Inner Process View')">
+        Inner Process View
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PacketViewComponent')" (click)="AddTab('Packet View')">
+        Packet View
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PrdViewComponent')" (click)="AddTab('Prediction View')">
+        Prediction View
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('ProcessViewComponent')" (click)="AddTab('Process View')">
+        Process View
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('TallyViewComponent')" (click)="AddTab('Tally View')">
+        Tally View
+      </li>
+    </mat-menu>
+
+    <div class="menuItem" mat-button [matMenuTriggerFor]="pricingMenu" *ngIf="TABVIEW('Pricing')">
+      <i class="icon-pricing mat-icon-side"></i>
+      <span>Pricing</span>
+    </div>
+
+    <mat-menu #pricingMenu="matMenu">
+      <li mat-menu-item *ngIf="CHECKPER('RapCutDiscComponent')" (click)="AddTab('Cut Discount')">
+        Cut Discount
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapFloDiscComponent')" (click)="AddTab('Flo Discount')">
+        Flo Discount
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapIncDiscComponent')" (click)="AddTab('Inclusion Discount')">
+        Inclusion Discount
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapCalComponent')" (click)="AddTab('Rap Calc')">
+        Rap Calc
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapMastComponent')" (click)="AddTab('Rap Mast')">
+        Rap Mast
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapOrgComponent')" (click)="AddTab('Rap Org')">
+        Rap Org
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapParamDiscComponent')" (click)="AddTab('Param Discount')">
+        Param Discount
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RapShdDiscComponent')" (click)="AddTab('Shade Discount')">
+        Shade Discount
+      </li>
+    </mat-menu>
+
+    <div class="menuItem" mat-button [matMenuTriggerFor]="reportMenu" *ngIf="TABVIEW('Report')">
+      <i class="icon-report mat-icon-side"></i>
+      <span>Report</span>
+    </div>
+
+    <mat-menu #reportMenu="matMenu">
+      <li mat-menu-item (click)="AddTab('Process Report'); ReportName('Process');">
+        Process Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Stock Report'); ReportName('Stock');">
+        Stock Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Final Report'); ReportName('Final');">
+        Final Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Sawing Report'); ReportName('Sawing');">
+        Sawing Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Pel Report'); ReportName('Pel');">
+        Pel Report
+      </li>
+      <li mat-menu-item (click)="AddTab('General Report'); ReportName('General');">
+        General Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Sarin Report'); ReportName('Sarin');">
+        Sarin Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Galaxy Report'); ReportName('Galaxy');">
+        Galaxy Report
+      </li>
+      <li mat-menu-item (click)="AddTab('History Report'); ReportName('History');">
+        History Report
+      </li>
+      <li mat-menu-item (click)="AddTab('4P Report'); ReportName('4P');">
+        4P Report
+      </li>
+      <li mat-menu-item (click)="AddTab('16Pel Report'); ReportName('16Pel');">
+        16Pel Report
+      </li>
+      <li mat-menu-item (click)="AddTab('Russian Report'); ReportName('Russian');">
+        Russian Report
+      </li>
+    </mat-menu>
+
+    <div class="menuItem" mat-button [matMenuTriggerFor]="configMenu" *ngIf="TABVIEW('Configuration')">
+      <i class="icon-config mat-icon-side"></i>
+      <span>Config</span>
+    </div>
+
+    <mat-menu #configMenu="matMenu">
+      <li mat-menu-item *ngIf="CHECKPER('FrmMastComponent')" (click)="AddTab('Form Master')">
+        Form Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('LoginDetailComponent')" (click)="AddTab('Login Deatils')">
+        Login Deatils
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('PerMastComponent')" (click)="AddTab('Permission Master')">
+        Permission Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RptMastComponent')" (click)="AddTab('Report Master')">
+        Report Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RptParaMastComponent')" (click)="AddTab('Report Parameter Master')">
+        Report Parameter Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('RptPerMastComponent')" (click)="AddTab('Report Permission Master')">
+        Report Permission Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('UserCatComponent')" (click)="AddTab('User Category Master')">
+        User Category Master
+      </li>
+      <li mat-menu-item *ngIf="CHECKPER('UserMastComponent')" (click)="AddTab('User Master')">
+        User Master
+      </li>
+    </mat-menu>
+
+  </nav>
+
+  <div class="user">
+    User:
+    <span> {{ USER_NAME }}</span>
+  </div>
+</aside>
+<header class="top-header-mini" id="header">
+  <div class="header-holder">
+    <div class="head-nav">
+
+      <div class="theme" (click)="ThemeToggle()">
+        <!-- <div class="btn" matTooltip='' matTooltipClass="custom-tooltip"> -->
+        <!-- <i class="icon-add mat-icon"></i> -->
+        THEME
+
+        <section class="theme-picker" *ngIf="COLORPICKER">
+          <div class="theme-box">
+            <h4> Choose Theme</h4>
+            <div class="theme-options">
+              <span (click)="ChangeTheme('dark')"> Dark </span>
+              <span (click)="ChangeTheme('blue')"> Blue </span>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="btn" matTooltip='RAP Calculator' matTooltipClass="custom-tooltip" *ngIf="CHECKPER('RapCalComponent')"
+        (click)="AddTab('Rap Calc')">
+        <i class="icon-calculator mat-icon"></i>
+      </div>
+      <div class="btn" matTooltip='Refresh Master Values' matTooltipClass="custom-tooltip" (click)="PageLoadApi()">
+        <i class="icon-reset mat-icon"></i>
+      </div>
+      <div class="btn" matTooltip='Logout' matTooltipClass="custom-tooltip" (click)="logout()">
+        <i class="icon-logout mat-icon"></i>
+      </div>
+    </div>
+  </div>
+  <!-- <color-sketch color="#fff" (onChangeComplete)="handleChange($event)" *ngIf="COLORPICKER">
+  </color-sketch> -->
+</header>

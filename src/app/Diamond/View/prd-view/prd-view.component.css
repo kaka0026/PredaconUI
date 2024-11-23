@@ -1,0 +1,14 @@
+.prd-view__container {
+  height: 85vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-gap: 0.5rem;
+}
+
+.prd-view__container--row-1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  justify-items: start;
+  align-items: center;
+  grid-column-gap: 0.5rem;
+}

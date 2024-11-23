@@ -1,0 +1,75 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>Shape</mat-label>
+      <input #shpInput (keyup)="0" matInput name="Shape" [formControl]="shpCtrl" [(ngModel)]="S_CODE"
+        [matAutocomplete]="autoshp" (ngModelChange)="GetShapeName()" />
+      <mat-autocomplete #autoshp="matAutocomplete">
+        <mat-option (click)="LoadGridData()" *ngFor="let shp of filteredshps | async" [value]="shp.code">
+          <span>{{shp.code}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Shape Name</mat-label>
+      <input matInput [(ngModel)]="S_NAME" name="Shape Name" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>Size</mat-label>
+      <input #szInput type="text" (keyup)="0" matInput name="Size" [formControl]="szCtrl" [(ngModel)]="SZ_CODE"
+        [matAutocomplete]="autosz" (ngModelChange)="GetSize()" />
+      <mat-autocomplete #autosz="matAutocomplete">
+        <mat-option (click)="LoadGridData()" *ngFor="let sz of filteredsz | async" [value]="sz.code">
+          <span>{{sz.code}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="number" autocomplete="off" [ngModel]="F_SIZE | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_SIZE = $event" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="number" autocomplete="off" [ngModel]="T_SIZE | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_SIZE = $event" disabled />
+    </mat-form-field>
+
+    <div class="btn-grp">
+      <div class="dropdown">
+        <button class="btn theme-btn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Download Rap
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <div class="mb-3">
+            <label class="form-label">User ID</label>
+            <input type="email" [(ngModel)]="USERID" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" [(ngModel)]="PASSWORD" />
+          </div>
+          <button class="btn theme-btn mr-2" (click)="RAPDOWNLAOD(USERID,PASSWORD)">Login</button>
+          <button class="btn theme-btn">Close</button>
+        </ul>
+      </div>
+      <button class="btn theme-btn ml-auto" matTooltip='Manual Import' matTooltipClass="custom-tooltip">
+        <i class="icon-import mat-icon"></i>
+        <label for="XlsInput1"></label>
+        <input type="file" id="XlsInput1" class="btn d-none" (change)="uploadCSVData($event)" #Import>
+      </button>
+
+      <button class="btn theme-btn" matTooltip='Export' matTooltipClass="custom-tooltip">
+        <i class="icon-export mat-icon"></i>
+      </button>
+    </div>
+  </div>
+  <ag-grid-angular id="myGrid" style="width: 100%; height: 75vh;" class="ag-theme-alpine"
+    [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)"
+    (cellValueChanged)="onCellValueChanged($event)" [animateRows]="true">
+  </ag-grid-angular>
+</div>

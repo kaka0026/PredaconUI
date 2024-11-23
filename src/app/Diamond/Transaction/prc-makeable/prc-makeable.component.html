@@ -1,0 +1,548 @@
+<div class="prc-makeable__container">
+
+  <mat-radio-group aria-label="Select an option" class="radio-grp prc-mak-ag-grid-radio" [(ngModel)]="RAPARR" disabled>
+    <mat-radio-button class="radio-btn" *ngFor="let rap of rapArray" [value]="rap.name">
+      {{ rap.name }}</mat-radio-button>
+  </mat-radio-group>
+
+  <ag-grid-angular style="width: 70%; height: 95%" class="ag-theme-alpine prc-mak-ag-grid"
+    [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+  </ag-grid-angular>
+
+  <mat-form-field appearance="outline" class="L_CODE">
+    <mat-label>L Code</mat-label>
+    <input matInput type="text" name="L Code" [matAutocomplete]="autoLOT" [formControl]="LOTCtrl" [(ngModel)]="L_CODE"
+      (ngModelChange)="GETLOT()" />
+    <mat-autocomplete #autoLOT="matAutocomplete" [displayWith]="displayFn" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredLOTs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="L_NAME">
+    <mat-label>L Name</mat-label>
+    <input matInput type="text" name="" [(ngModel)]="L_NAME" autocomplete="off" disabled />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="L_CARAT">
+    <mat-label>L Carat</mat-label>
+    <input matInput type="number" name="" [ngModel]="L_CARAT | setFloat:3" autocomplete="off"
+      [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="L_CARAT = $event" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="SRNO">
+    <mat-label>SRNO</mat-label>
+    <input matInput type="number" name="SRNO" [(ngModel)]="SRNO" autocomplete="off" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="TAG">
+    <mat-label>Tag</mat-label>
+    <input matInput name="Tag" [(ngModel)]="TAG" (ngModelChange)="TAG = $event.toUpperCase()" (blur)='Tagvalidation()'
+      (keydown.enter)="Tagvalidation()" autocomplete="off" />
+  </mat-form-field>
+  <mat-radio-group aria-label="Select an option" [(ngModel)]="RAPTYPE" class="radio-grp prc-mak-radio">
+    <mat-radio-button *ngFor="let item of RAPTArray" [value]="item.code" class="radio-btn">{{item.name}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field appearance="outline" (click)="ID1.open()" class="DATE">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="DATE" />
+    <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+    <mat-datepicker #ID1></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="TIME">
+    <mat-label>Time</mat-label>
+    <input matInput type="text" name="" autocomplete="off" [(ngModel)]="TIME" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="PCS">
+    <mat-label>Pcs</mat-label>
+    <input matInput type="number" name="Pcs" autocomplete="off" [(ngModel)]="PCS" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="CARAT">
+    <mat-label>Carat</mat-label>
+    <input matInput type="number" name="Carat" autocomplete="off" [ngModel]="CARAT | setFloat:3"
+      [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="CARAT = $event" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="M_CARAT">
+    <mat-label>M Carat</mat-label>
+    <input matInput type="number" name="M Carat" autocomplete="off" [ngModel]="M_CARAT | setFloat:3"
+      [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="M_CARAT = $event" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="EXP">
+    <mat-label>Exp</mat-label>
+    <input matInput type="text" name="Exp" autocomplete="off" id='exp' [(ngModel)]="EXP"
+      (ngModelChange)="EXP = $event.toUpperCase()" (blur)="findrap()" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="S_CODE">
+    <mat-label>Shape</mat-label>
+    <input matInput type="text" name="Shape" [matAutocomplete]="autoSHP" [formControl]="shpCtrl" [(ngModel)]="S_CODE"
+      (ngModelChange)="getName(S_CODE,'S_NAME',shapeArray);GETANOTHERARR(S_CODE)" (blur)="findrap()" />
+    <mat-autocomplete #autoSHP="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredShps | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="S_NAME">
+    <mat-label>Shape Name</mat-label>
+    <input matInput type="text" name="Shape Name" autocomplete="off" [(ngModel)]="S_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="REG_CODE">
+    <mat-label>Regular</mat-label>
+    <input matInput type="text" name="Regular" [matAutocomplete]="autoREG" [formControl]="regCtrl"
+      [(ngModel)]="REG_CODE" (ngModelChange)="getName(REG_CODE,'REG_NAME',regularArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoREG="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredRegs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="REG_NAME">
+    <mat-label>Regular Name</mat-label>
+    <input matInput type="text" name="Regular Name" autocomplete="off" [(ngModel)]="REG_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="CO_CODE" *ngIf="autoHIDE">
+    <mat-label>Crown Open</mat-label>
+    <input matInput type="text" name="Crown Open" [matAutocomplete]="autoCO" [formControl]="croCtrl"
+      [(ngModel)]="CO_CODE" (ngModelChange)="getName(CO_CODE,'CO_NAME',crownOpenArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoCO="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredCrOs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="CO_NAME" *ngIf="autoHIDE">
+    <mat-label>Crown Open Name</mat-label>
+    <input matInput type="text" name="Crown Open Name" autocomplete="off" [(ngModel)]="CO_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="PO_CODE" *ngIf="autoHIDE">
+    <mat-label>Pav Open</mat-label>
+    <input matInput type="text" name="Pav Open" [matAutocomplete]="autoPO" [formControl]="poCtrl" [(ngModel)]="PO_CODE"
+      (ngModelChange)="getName(PO_CODE,'PO_NAME',pavOpenArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoPO="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredPOs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="PO_NAME" *ngIf="autoHIDE">
+    <mat-label>Pav Open Name</mat-label>
+    <input matInput type="text" name="Pav Open Name" autocomplete="off" [(ngModel)]="PO_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="Q_CODE">
+    <mat-label>Clarity</mat-label>
+    <input matInput name="Clarity" [matAutocomplete]="autoQUA" [formControl]="quaCtrl" [(ngModel)]="Q_CODE"
+      (ngModelChange)="getName(Q_CODE,'Q_NAME',clarityArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoQUA="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredQuas | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="Q_NAME">
+    <mat-label>Clarity Name</mat-label>
+    <input matInput type="text" name="Clarity Name" autocomplete="off" [(ngModel)]="Q_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="RS_CODE" *ngIf="autoHIDE">
+    <mat-label>Red Spot</mat-label>
+    <input matInput type="text" name="Red Spot" [matAutocomplete]="autoRS" [formControl]="rsCtrl" [(ngModel)]="RS_CODE"
+      (ngModelChange)="getName(RS_CODE,'RS_NAME',redSpotArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoRS="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredRSs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="RS_NAME" *ngIf="autoHIDE">
+    <mat-label>Red Spot Name</mat-label>
+    <input matInput type="text" name="Red Spot Name" autocomplete="off" [(ngModel)]="RS_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="CU_CODE" *ngIf="autoHIDE">
+    <mat-label>Culet</mat-label>
+    <input matInput type="text" name="Culet" [matAutocomplete]="autoCUL" [formControl]="culCtrl" [(ngModel)]="CU_CODE"
+      (ngModelChange)="getName(CU_CODE,'CU_NAME',culetArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoCUL="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredCuls | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="CU_NAME" *ngIf="autoHIDE">
+    <mat-label>Culet Name</mat-label>
+    <input matInput type="text" name="Clarity Name" autocomplete="off" [(ngModel)]="CU_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="SD_CODE" *ngIf="autoHIDE">
+    <mat-label>Side</mat-label>
+    <input matInput type="text" name="Side" aria-label="Side" [matAutocomplete]="autoSD" [formControl]="sideCtrl"
+      [(ngModel)]="SD_CODE" (ngModelChange)="getName(SD_CODE,'SD_NAME',sideArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoSD="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredSides | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="SD_NAME" *ngIf="autoHIDE">
+    <mat-label>Side Name</mat-label>
+    <input matInput type="text" name="Side Name" autocomplete="off" [(ngModel)]="SD_NAME" type="text" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="C_CODE">
+    <mat-label>Color</mat-label>
+    <input matInput type="text" name="Color" [matAutocomplete]="autoCOL" [formControl]="colCtrl" [(ngModel)]="C_CODE"
+      (ngModelChange)="getName(C_CODE,'C_NAME',colorArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoCOL="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredCols | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="C_NAME">
+    <mat-label>Color Name</mat-label>
+    <input matInput type="text" name="Color Name" autocomplete="off" [(ngModel)]="C_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="DEPTH_CODE" *ngIf="autoHIDE">
+    <mat-label>Depth</mat-label>
+    <input matInput type="text" name="Depth" [matAutocomplete]="autoDEPT" [formControl]="dptCtrl"
+      [(ngModel)]="DEPTH_CODE" (ngModelChange)="getName(DEPTH_CODE,'DEPTH_NAME',deptharray)" (blur)="findrap()" />
+    <mat-autocomplete #autoDEPT="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredDpts | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="DEPTH_NAME" *ngIf="autoHIDE">
+    <mat-label>Depth Name</mat-label>
+    <input matInput name="Depth Name" autocomplete="off" [(ngModel)]="DEPTH_NAME" type="text" disabled>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="EF_CODE" *ngIf="autoHIDE">
+    <mat-label>Extra Facet</mat-label>
+    <input matInput type="text" name="Extra Facet" aria-label="Extra Facet" [matAutocomplete]="autoEXF"
+      [formControl]="exfCtrl" [(ngModel)]="EF_CODE" (ngModelChange)="getName(EF_CODE,'EF_NAME',extraFacetArray)"
+      (blur)="findrap()" />
+    <mat-autocomplete #autoEXF="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredExFs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="EF_NAME" *ngIf="autoHIDE">
+    <mat-label>Extra Facet Name</mat-label>
+    <input matInput type="text" name="Extra Facet Name" autocomplete="off" [(ngModel)]="EF_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="SB_CODE" *ngIf="autoHIDE">
+    <mat-label>Side Black</mat-label>
+    <input matInput type="text" name="Side Black" aria-label="Side Black" [matAutocomplete]="autoSB"
+      [formControl]="sbCtrl" [(ngModel)]="SB_CODE" (ngModelChange)="getName(SB_CODE,'SB_NAME',sideBlackArray)"
+      (blur)="findrap()" />
+    <mat-autocomplete #autoSB="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredSBs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="SB_NAME" *ngIf="autoHIDE">
+    <mat-label>Side Black Name</mat-label>
+    <input matInput type="text" name="Side Black Name" autocomplete="off" [(ngModel)]="SB_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="CT_CODE">
+    <mat-label>Cut</mat-label>
+    <input matInput type="text" name="Cut" aria-label="Cut" [matAutocomplete]="autoCUT1" [formControl]="cutCtrl1"
+      [(ngModel)]="CT_CODE" (ngModelChange)="getName(CT_CODE,'CT_NAME',cutArray1)" (blur)="findrap()" />
+    <mat-autocomplete #autoCUT1="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredCuts1 | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="CT_NAME">
+    <mat-label>Cut Name</mat-label>
+    <input matInput type="text" name="Cut Name" autocomplete="off" [(ngModel)]="CT_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="RATIO_CODE" *ngIf="autoHIDE">
+    <mat-label>Ratio</mat-label>
+    <input matInput type="text" name="Ratio" aria-label="Ratio" [matAutocomplete]="autoRAT" [formControl]="ratioCtrl"
+      [(ngModel)]="RATIO_CODE" (ngModelChange)="getName(RATIO_CODE,'RATIO_NAME',ratioarray)" (blur)="findrap()" />
+    <mat-autocomplete #autoRAT="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredRatios | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="RATIO_NAME" *ngIf="autoHIDE">
+    <mat-label>Ratio Name</mat-label>
+    <input matInput type="text" name="Ratio Name" autocomplete="off" [(ngModel)]="RATIO_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="EC_CODE" *ngIf="autoHIDE">
+    <mat-label>Eye Clean</mat-label>
+    <input matInput type="text" name="Eye Clean" [matAutocomplete]="autoEYC" [formControl]="eycCtrl"
+      [(ngModel)]="EC_CODE" (ngModelChange)="getName(EC_CODE,'EC_NAME',eyeCleanArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoEYC="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredEycs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="EC_NAME" *ngIf="autoHIDE">
+    <mat-label>Eye Clean Name</mat-label>
+    <input matInput type="text" name="Eye Clean Name" autocomplete="off" [(ngModel)]="EC_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="SO_CODE" *ngIf="autoHIDE">
+    <mat-label>Side Open</mat-label>
+    <input matInput type="text" name="Side Open" [matAutocomplete]="autoSO" [formControl]="soCtrl" [(ngModel)]="SO_CODE"
+      (ngModelChange)="getName(SO_CODE,'SO_NAME',sideOpenArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoSO="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredSOs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="SO_NAME" *ngIf="autoHIDE">
+    <mat-label>Side Open Name</mat-label>
+    <input matInput type="text" name="Side Open Name" autocomplete="off" [(ngModel)]="SO_NAME" disabled>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="PL_CODE">
+    <mat-label>Polish</mat-label>
+    <input matInput type="text" name="Polish" [matAutocomplete]="autoCUT2" [formControl]="cutCtrl2"
+      [(ngModel)]="PL_CODE" (ngModelChange)="getName(PL_CODE,'PL_NAME',cutArray2)" (blur)="findrap()" />
+    <mat-autocomplete #autoCUT2="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredCuts2 | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="PL_NAME">
+    <mat-label>Polish Name</mat-label>
+    <input matInput type="text" name="Polish Name" autocomplete="off" [(ngModel)]="PL_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="TABLE_CODE" *ngIf="autoHIDE">
+    <mat-label>Table</mat-label>
+    <input matInput type="text" name="Table" [matAutocomplete]="autoTAB" [formControl]="tableCtrl"
+      [(ngModel)]="TABLE_CODE" (ngModelChange)="getName(TABLE_CODE,'TABLE_NAME',tablearray)" (blur)="findrap()" />
+    <mat-autocomplete #autoTAB="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredTables | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="TABLE_NAME" *ngIf="autoHIDE">
+    <mat-label>Table Name</mat-label>
+    <input matInput type="text" name="Table Name" autocomplete="off" [(ngModel)]="TABLE_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="GO_CODE" *ngIf="autoHIDE">
+    <mat-label>Gridle Open</mat-label>
+    <input matInput type="text" name="Gridle Open" [matAutocomplete]="autoGRO" [formControl]="groCtrl"
+      [(ngModel)]="GO_CODE" (ngModelChange)="getName(GO_CODE,'GO_NAME',gridleOpenArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoGRO="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredGrOs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="GO_NAME" *ngIf="autoHIDE">
+    <mat-label>Gridle Open Name</mat-label>
+    <input matInput type="text" name="Gridle Open Name" autocomplete="off" [(ngModel)]="GO_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="TAB_CODE" *ngIf="autoHIDE">
+    <mat-label>Table</mat-label>
+    <input matInput type="text" name="Table" [matAutocomplete]="autoTABLE" [formControl]="tabCtrl"
+      [(ngModel)]="TAB_CODE" (ngModelChange)="getName(TAB_CODE,'TAB_NAME',tableArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoTABLE="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredTabs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="TAB_NAME" *ngIf="autoHIDE">
+    <mat-label>Table Name</mat-label>
+    <input matInput type="text" name="Table Name" autocomplete="off" [(ngModel)]="TAB_NAME" type="text" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="SYM_CODE">
+    <mat-label>Sym</mat-label>
+    <input matInput type="text" name="Sym" [matAutocomplete]="autoCUT3" [formControl]="cutCtrl3" [(ngModel)]="SYM_CODE"
+      (ngModelChange)="getName(SYM_CODE,'SYM_NAME',cutArray3)" (blur)="findrap()" />
+    <mat-autocomplete #autoCUT3="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredCuts3 | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="SYM_NAME">
+    <mat-label>Sym Name</mat-label>
+    <input matInput type="text" name="Sym Name" autocomplete="off" [(ngModel)]="SYM_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="DIAMETER_CODE" *ngIf="autoHIDE">
+    <mat-label>Diameter</mat-label>
+    <input matInput type="text" name="Diameter" [matAutocomplete]="autoDIA" [formControl]="diaCtrl"
+      [(ngModel)]="DIAMETER_CODE" (ngModelChange)="getName(DIAMETER_CODE,'DIAMETER_NAME',diameterarray)"
+      (blur)="findrap()" />
+    <mat-autocomplete #autoDIA="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredDias | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="DIAMETER_NAME" *ngIf="autoHIDE">
+    <mat-label>Diameter Name</mat-label>
+    <input matInput type="text" name="Diameter Name" autocomplete="off" [(ngModel)]="DIAMETER_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="GRN_CODE" *ngIf="autoHIDE">
+    <mat-label>Graining</mat-label>
+    <input matInput type="text" name="Graining" [matAutocomplete]="autoGRN" [formControl]="grnCtrl"
+      [(ngModel)]="GRN_CODE" (ngModelChange)="getName(GRN_CODE,'GRN_NAME',grainingArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoGRN="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredGrns | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="GRN_NAME" *ngIf="autoHIDE">
+    <mat-label>Graining Name</mat-label>
+    <input matInput type="text" name="Graining Name" autocomplete="off" [(ngModel)]="GRN_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="TB_CODE" *ngIf="autoHIDE">
+    <mat-label>Table Black</mat-label>
+    <input matInput type="text" name="Table Black" [matAutocomplete]="autoTB" [formControl]="tbCtrl"
+      [(ngModel)]="TB_CODE" (ngModelChange)="getName(TB_CODE,'TB_NAME',tableBlackArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoTB="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredTBs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="TB_NAME" *ngIf="autoHIDE">
+    <mat-label>Table Black Name</mat-label>
+    <input matInput type="text" name="Table Black Name" autocomplete="off" [(ngModel)]="TB_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="FL_CODE">
+    <mat-label>Flo</mat-label>
+    <input matInput type="text" name="Flo" [matAutocomplete]="autoFLO" [formControl]="floCtrl" [(ngModel)]="FL_CODE"
+      (ngModelChange)="getName(FL_CODE,'FL_NAME',floArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoFLO="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredFlos | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="FL_NAME">
+    <mat-label>Flo Name</mat-label>
+    <input matInput type="text" name="Flo Name" autocomplete="off" [(ngModel)]="FL_SHORTNAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="RATE">
+    <mat-label>Rate</mat-label>
+    <input matInput name="Rate" autocomplete="off" [(ngModel)]="RATE" type="text" disabled>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="LSTR_CODE" *ngIf="autoHIDE">
+    <mat-label>Luster</mat-label>
+    <input matInput type="text" name="Luster" [matAutocomplete]="autoLU" [formControl]="luCtrl" [(ngModel)]="LSTR_CODE"
+      (ngModelChange)="getName(LSTR_CODE,'LSTR_NAME',lusterArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoLU="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredLus | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field type="text" appearance="outline" class="LSTR_NAME" *ngIf="autoHIDE">
+    <mat-label>Luster Name</mat-label>
+    <input matInput name="Luster Name" autocomplete="off" [(ngModel)]="LSTR_NAME" type="text" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="TO_CODE" *ngIf="autoHIDE">
+    <mat-label>Table Ope</mat-label>
+    <input matInput type="text" name="Table Ope" [matAutocomplete]="autoTO" [formControl]="toCtrl" [(ngModel)]="TO_CODE"
+      (ngModelChange)="getName(TO_CODE,'TO_NAME',tableOpenArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoTO="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredTOs | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="TO_NAME" *ngIf="autoHIDE">
+    <mat-label>Table Open Name</mat-label>
+    <input matInput type="text" name="Table Open Name" autocomplete="off" [(ngModel)]="TO_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="SH_CODE">
+    <mat-label>Shade</mat-label>
+    <input matInput type="text" name="Shade" [matAutocomplete]="autoSHD" [formControl]="shdCtrl" [(ngModel)]="SH_CODE"
+      (ngModelChange)="getName(SH_CODE,'SH_NAME',shdArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoSHD="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredShds | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="SH_NAME">
+    <mat-label>Shade Name</mat-label>
+    <input matInput type="text" name="Shade Name" autocomplete="off" [(ngModel)]="SH_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="AMOUNT">
+    <mat-label>Amount</mat-label>
+    <input matInput type="text" name="Amount" autocomplete="off" [(ngModel)]="AMOUNT" type="text" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="MLK_CODE" *ngIf="autoHIDE">
+    <mat-label>Milky</mat-label>
+    <input matInput type="text" name="Milky" [matAutocomplete]="autoML" [formControl]="mlCtrl" [(ngModel)]="MLK_CODE"
+      (ngModelChange)="getName(MLK_CODE,'MLK_NAME',milkyArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoML="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredMls | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="MLK_NAME" *ngIf="autoHIDE">
+    <mat-label>Milky Name</mat-label>
+    <input matInput type="text" name="Milky Name" autocomplete="off" [(ngModel)]="MLK_NAME" disabled />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="NAT_CODE" *ngIf="autoHIDE">
+    <mat-label>Natural</mat-label>
+    <input matInput type="text" name="Natural" [matAutocomplete]="autoNA" [formControl]="naCtrl" [(ngModel)]="NAT_CODE"
+      (ngModelChange)="getName(NAT_CODE,'NAT_NAME',naturalArray)" (blur)="findrap()" />
+    <mat-autocomplete #autoNA="matAutocomplete" autoActiveFirstOption="true">
+      <mat-option *ngFor="let ct of filteredNas | async" [value]="ct.code">
+        <span>{{ ct.code }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="NAT_NAME" *ngIf="autoHIDE">
+    <mat-label>Natural Name</mat-label>
+    <input matInput type="text" name="Natural Name" autocomplete="off" [(ngModel)]="NAT_NAME" disabled />
+  </mat-form-field>
+
+  <button class="btn theme-btn SAVE_BTN" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="SAVE()">
+    <i class="icon-save mat-icon"></i>
+  </button>
+  <button class="btn theme-btn DELETE_BTN" matTooltip='Delete' matTooltipClass="custom-tooltip" (click)="DELETE()">
+    <i class="icon-delete mat-icon"></i>
+  </button>
+</div>

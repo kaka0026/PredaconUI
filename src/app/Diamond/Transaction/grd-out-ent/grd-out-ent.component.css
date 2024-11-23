@@ -1,0 +1,10 @@
+.btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-wrappwe--sub {
+  display: flex;
+  gap: 1rem;
+}

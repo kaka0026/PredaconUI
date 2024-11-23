@@ -1,0 +1,70 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Dept Code *</mat-label>
+      <input matInput type="text" name="Dept Code" aria-label="Dept Code *" [matAutocomplete]="autoDEPT"
+        [formControl]="deptCtrl" [(ngModel)]="DEPT_CODE" (blur)="prcFill()" />
+      <mat-autocomplete #autoDEPT="matAutocomplete">
+        <mat-option *ngFor="let dept of filteredDepts | async" [value]="dept.code">
+          <span>{{ dept.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Shift</mat-label>
+      <input matInput type="text" name="Shift" aria-label="Shift" [matAutocomplete]="autoSFT" [formControl]="sftCtrl"
+        [(ngModel)]="S_CODE" />
+      <mat-autocomplete #autoSFT="matAutocomplete">
+        <mat-option *ngFor="let sft of filteredSfts | async" [value]="sft.code">
+          <span>{{ sft.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="VDt.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="VDt" [readonly]="true" [(ngModel)]="S_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="VDt"></mat-datepicker-toggle>
+      <mat-datepicker #VDt></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Process</mat-label>
+      <input matInput type="text" name="Process" aria-label="Process" [matAutocomplete]="autoPRC"
+        [formControl]="prcCtrl" [(ngModel)]="PRC_CODE" (blur)="FillData()" (ngModelChange)="GETPRCNAME()" />
+      <mat-autocomplete #autoPRC="matAutocomplete">
+        <mat-option *ngFor="let prc of filteredPrcs | async" [value]="prc.code">
+          <span>{{ prc.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input matInput type="text" autocomplete="off" [(ngModel)]="PRCNAME" disabled />
+    </mat-form-field>
+    <div class="btn-grp">
+
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <i class="icon-refresh mat-icon"></i>
+      </button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+
+    <jqxGrid #grid (onCellendedit)="myGridOnCellEndEdit($event)" [height]="530" [width]="getWidth()"
+      [source]="dataAdapter" [columns]="columns" [editable]="editable" [selectionmode]="'singlecell'"
+      (onCellendedit)="myGridOnCellEndEdit($event)">
+    </jqxGrid>
+
+    <mat-form-field appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="PASSWORDCHANGE()" />
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

@@ -1,0 +1,18 @@
+.prc-rec-issue__container-1 {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
+  grid-gap: 0.5rem;
+}
+.prc-rec-issue__container-2 {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto auto auto 1fr;
+  grid-gap: 0.5rem;
+}
+
+:host .btn-grp {
+  justify-items: start;
+  justify-content: space-between;
+  align-items: center;
+}

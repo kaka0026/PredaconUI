@@ -1,0 +1,6 @@
+.prc-ret-prnt__container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  grid-gap: 0.5rem;
+}

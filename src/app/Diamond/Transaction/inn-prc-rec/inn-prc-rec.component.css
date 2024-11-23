@@ -1,0 +1,65 @@
+.inn-prc-rec__container {
+  height: 88vh;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+}
+
+.inn-prc-rec__container--row-1 {
+  max-width: fit-content;
+
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-gap: 5px;
+}
+
+.inn-prc-rec__container--row-2 {
+  max-width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(7, 100px);
+}
+
+.inn-prc-rec__container--col {
+  display: grid;
+  grid-auto-flow: row;
+  justify-items: center;
+}
+
+.inn-prc-rec__container--row-3 {
+  display: grid;
+  grid-template-columns: 25% 25%;
+}
+
+.inn-prc-rec-grid-on {
+  opacity: 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.inn-prc-rec-grid-off {
+  opacity: 0;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.inn-prc-rec__container--row-3-col {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+/* :host .password {
+  grid-column: 1 / -1;
+  justify-self: end;
+} */
+
+:host::ng-deep.mat-form-field {
+  width: 6rem;
+}
+
+@media only screen and (max-width: 1280px) {
+  .inn-prc-rec__container--row-3 {
+    grid-template-columns: 30% 25%;
+  }
+}

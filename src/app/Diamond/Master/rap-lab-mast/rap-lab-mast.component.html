@@ -1,0 +1,53 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Code *</mat-label>
+      <input matInput type="number" name="Code" autocomplete="off" [(ngModel)]="CODE" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>F Size *</mat-label>
+      <input matInput type="number" name="F Size" autocomplete="off" [ngModel]="FSIZE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="FSIZE = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>T Size *</mat-label>
+      <input matInput type="number" name="T Size" autocomplete="off" [ngModel]="TSIZE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="TSIZE = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Rate *</mat-label>
+      <input matInput type="number" name="Rate" autocomplete="off" [ngModel]="RATE | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="RATE = $event"
+        (keypress)="SaveClear($event.keyCode)" />
+    </mat-form-field>
+    <mat-radio-group class="rad-grp" [(ngModel)]="LAB_TYPE" (ngModelChange)="LoadGridData()">
+      <mat-radio-button value="GIA">GIA</mat-radio-button>
+      <mat-radio-button value="MFG">MFG</mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group class="rad-grp col-span-2" [(ngModel)]="COL_TYPE" (ngModelChange)="LoadGridData()">
+      <mat-radio-button value="REG">Natural D to Z Color</mat-radio-button>
+      <mat-radio-button value="FANCY">Fancy Color</mat-radio-button>
+    </mat-radio-group>
+    <mat-radio-group class="rad-grp" [(ngModel)]="SHP_TYPE" (ngModelChange)="LoadGridData()">
+      <mat-radio-button value="R">Round</mat-radio-button>
+      <mat-radio-button value="F">Fancy</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

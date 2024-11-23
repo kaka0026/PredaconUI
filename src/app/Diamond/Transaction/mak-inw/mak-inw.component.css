@@ -1,0 +1,11 @@
+.btn-wrapper {
+  display: grid;
+  align-items: center;
+  grid-auto-flow: column;
+  justify-content: space-between;
+}
+
+.btn-wrappwe--sub {
+  display: flex;
+  gap: 1rem;
+}

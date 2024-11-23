@@ -1,0 +1,190 @@
+<div class="prd-view__container">
+  <div class="prd-view__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input #LOTInput (keydown)="keypressLOT($event,LOTInput.value)" matInput name="L Code" aria-label="L Code"
+        [matAutocomplete]="autoLOT" [formControl]="LOTCtrl" [(ngModel)]="L_CODE" />
+      <mat-autocomplete #autoLOT="matAutocomplete">
+        <mat-option (onSelectionChange)="LOTInput.value !=undefined && onEnterLOT($event)"
+          *ngFor="let lot of filteredLOTs | async" [value]="lot.CODE" (click)="GetLotName(lot.NAME,lot.CARAT)">
+          <span class="s-right">{{lot.CODE}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>L Name</mat-label>
+      <input matInput type="text" name="L Name" [(ngModel)]="L_NAME" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>L Carat</mat-label>
+      <input matInput type="number" name="L Carat" [ngModel]="L_CARAT | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="L_CARAT = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>SrNo</mat-label>
+      <input matInput type="number" name="SrNo" [(ngModel)]="SRNO" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" [(ngModel)]="TAG" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input matInput type="text" name="Employee" aria-label="Employee" [matAutocomplete]="autoEMP"
+        [formControl]="empCtrl" [(ngModel)]="EMP_CODE" (ngModelChange)="GetEmpName()" />
+      <mat-autocomplete #autoEMP="matAutocomplete">
+        <mat-option *ngFor="let emp of filteredEmps | async" [value]="emp.code">
+          <span>{{ emp.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Emp Name</mat-label>
+      <input matInput type="text" name="Emp-Name" [(ngModel)]="EMP_NAME" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>F Carat</mat-label>
+      <input matInput type="number" name="F Carat" [(ngModel)]="F_CARAT" [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="F_CARAT = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>T Carat</mat-label>
+      <input matInput type="number" name="T Carat" [(ngModel)]="T_CARAT" [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="T_CARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Prd</mat-label>
+      <input matInput type="text" name="Prd" [matAutocomplete]="autoPRD" [formControl]="prdCtrl" [(ngModel)]="PRD_CODE"
+        (ngModelChange)="GetPrdName()" />
+      <mat-autocomplete #autoPRD="matAutocomplete">
+        <mat-option *ngFor="let prd of filteredPrds | async" [value]="prd.code">
+          <span>{{ prd.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Prd-Name</mat-label>
+      <input matInput type="text" name="Prd-Name" [(ngModel)]="PRD_NAME" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Shp</mat-label>
+      <input matInput type="text" name="Shp" [matAutocomplete]="autoSHP" [formControl]="shpCtrl" [(ngModel)]="SHP_CODE"
+        (ngModelChange)="GetShpName()" />
+      <mat-autocomplete #autoSHP="matAutocomplete">
+        <mat-option *ngFor="let shp of filteredShps | async" [value]="shp.code">
+          <span>{{ shp.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Shp</mat-label>
+      <input matInput type="text" name="Shp-Name" [(ngModel)]="SHP_NAME" disabled />
+    </mat-form-field>
+
+    <mat-radio-group class="col-span-2" [(ngModel)]="TYP">
+      <mat-radio-button value="A">ALL</mat-radio-button>
+      <mat-radio-button value="S">Selection</mat-radio-button>
+      <mat-radio-button value="R">Regular</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field class='password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Show' matTooltipClass="custom-tooltip" (click)="LoadGridData()">
+        <i class="icon-show mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" [hidden]="HIDESAVE"
+        (click)="Save()">
+        <i class="icon-save mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Print' matTooltipClass="custom-tooltip" (click)="Print()">
+        <i class="icon-print mat-icon"></i>
+      </button>
+    </div>
+  </div>
+  <div class="prd-view__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 58vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [pagination]="true" [columnDefs]="columnDefs" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)"
+      (rowClicked)='onGridRowClicked($event)' [animateRows]="true" [getRowStyle]="getRowStyle">
+    </ag-grid-angular>
+  </div>
+  <div class="prd-view__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Tot Pcs</mat-label>
+      <input matInput type="number" name="Tot Pcs" [(ngModel)]="TOTPCS" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Rough</mat-label>
+      <input matInput type="text" name="Rough" [(ngModel)]="ROUGH" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Fnl Pcs</mat-label>
+      <input matInput type="number" name="Fnl Pcs" [(ngModel)]="FINPCS" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Fnl Crt</mat-label>
+      <input matInput type="number" name="Fnl Crt" [ngModel]="FINCARAT | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="FINCARAT = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>E Crt</mat-label>
+      <input matInput type="number" name="E Crt" [ngModel]="ECARAT | setFloat:3" [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="ECARAT = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>E Crt%</mat-label>
+      <input matInput type="number" name="E Crt%" [ngModel]="ECARATPER | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="ECARATPER = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>PenPcs</mat-label>
+      <input matInput type="number" name="PenPcs" [(ngModel)]="PENPCS" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>PenCrt</mat-label>
+      <input matInput type="number" name="PenCrt" [ngModel]="PENCARAT | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="PENCARAT = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Rate</mat-label>
+      <input matInput type="number" name="Rate" [ngModel]="RATE | setFloat:2" [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="RATE = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Amt</mat-label>
+      <input matInput type="number" name="Amt" [ngModel]="AMT | setFloat:2" disabled
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="AMT = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Avg</mat-label>
+      <input matInput type="number" name="Avg" [(ngModel)]="AVG" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>GIA%</mat-label>
+      <input matInput type="number" name="GIA%" [ngModel]="GIAPER | setFloat:2" disabled
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="GIAPER = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Loose%</mat-label>
+      <input matInput type="number" name="Loose%" [ngModel]="LOOSEPER | setFloat:2"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="LOOSEPER = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>R%</mat-label>
+      <input matInput type="number" name="R%" [ngModel]="RPER | setFloat:2" [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="RPER = $event" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>F%</mat-label>
+      <input matInput type="number" name="F%" [ngModel]="FPER | setFloat:2" [ngModelOptions]="{ updateOn: 'blur' }"
+        (ngModelChange)="FPER = $event" disabled>
+    </mat-form-field>
+  </div>
+</div>

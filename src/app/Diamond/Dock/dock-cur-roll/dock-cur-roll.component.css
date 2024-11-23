@@ -1,0 +1,24 @@
+.dock_prc__container {
+  height: 75vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background-color: lavender;
+  grid-gap: 0.5rem;
+  z-index: 1;
+  padding: 1rem;
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+}
+.dock_prc__container--row-1 {
+  display: grid;
+  justify-items: start;
+  align-items: center;
+  grid-gap: 0.5rem;
+}
+
+.dock {
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: column;
+  align-items: center;
+}

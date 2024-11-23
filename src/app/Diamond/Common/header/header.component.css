@@ -1,0 +1,96 @@
+.main-container {
+  /* overflow: hidden; */
+}
+
+.mat-icon {
+  color: var(--color-accent) !important;
+}
+
+.mat-tab-label-activel .mat-icon {
+  color: var(--color-white) !important;
+}
+
+.l-mini {
+  width: calc(100% - 100px);
+  display: block;
+  margin-left: auto;
+  height: 100vh;
+  padding-top: 34px;
+  position: relative;
+  z-index: 0;
+}
+
+.l-full {
+  width: calc(100% - 170px);
+  display: block;
+  margin-left: auto;
+  height: 100vh;
+  padding-top: 34px;
+  position: relative;
+  z-index: 0;
+}
+
+.side-hub {
+  max-height: 85vh;
+  width: 2%;
+  position: absolute;
+  top: 5rem;
+  right: 0rem;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 10;
+  display: grid;
+  grid-gap: 0.5rem;
+}
+.side-hub-ele {
+  padding: 1rem 0;
+  width: 3rem;
+  background-color: var(--color-accent);
+  border-radius: 2rem;
+  letter-spacing: normal;
+  /* height: inherit; */
+  /* transform: scaleX(1.5); */
+}
+
+.hub-dialog {
+  position: absolute;
+  top: 5rem;
+  right: 5rem;
+}
+
+.vert-text {
+  font-weight: 500;
+  font-size: 12px;
+  writing-mode: vertical-rl;
+  text-orientation: initial;
+
+  color: var(--color-white);
+}
+
+.hub1 {
+  display: none;
+  position: fixed;
+  top: 4rem;
+  right: 1.9rem;
+}
+
+.hub2 {
+  display: none;
+  position: fixed;
+  top: 4rem;
+  right: 1.9rem;
+}
+
+.hub3 {
+  display: none;
+  position: fixed;
+  top: 4rem;
+  right: 1.9rem;
+}
+
+.pin {
+  position: fixed;
+  top: 4.3rem;
+  right: 3rem;
+  z-index: 1;
+}

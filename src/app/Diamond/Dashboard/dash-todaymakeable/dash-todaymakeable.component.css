@@ -1,0 +1,27 @@
+p {
+  margin: 0;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.row-1 {
+  display: grid;
+  grid-auto-flow: column;
+  justify-items: start;
+  align-items: baseline;
+  grid-template-columns: 1fr auto auto;
+  align-content: center;
+  justify-content: center;
+  grid-gap: 0.5rem;
+}
+
+mat-icon {
+  font-size: 15px;
+  height: 17px !important;
+  width: 25px !important;
+}
+
+button {
+  padding: 0 !important;
+  margin: 0 !important;
+}

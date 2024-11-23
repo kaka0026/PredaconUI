@@ -1,0 +1,37 @@
+.tally-view__container {
+  height: 85vh;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 0.5rem;
+}
+
+.tally-view__container--row-1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  justify-items: start;
+  align-items: center;
+  grid-column-gap: 0.5rem;
+}
+
+.tally-view__container--row-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  justify-items: start;
+  align-items: center;
+  grid-column-gap: 0.5rem;
+}
+
+.tally-view__container--row-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(650px, 1fr));
+  grid-column-gap: 0.5rem;
+}
+
+:host .btn-grp {
+  grid-column: -4 / -1;
+}
+
+:host .radio-btn:not(:last-child) {
+  margin-right: 4px;
+}

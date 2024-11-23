@@ -1,0 +1,813 @@
+<div class="grd-ent__container">
+
+  <section class="grd-ent__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Lot Code</mat-label>
+      <input matInput name="Lot Code" [matAutocomplete]="autoLOT" [formControl]="LotControl" [(ngModel)]="L_CODE"
+        (ngModelChange)="GetName(L_CODE, 'L_NAME', lots)" />
+      <mat-autocomplete #autoLOT="matAutocomplete">
+        <mat-option *ngFor="let lot of filteredLots | async" [value]="lot.code">
+          <span>{{ lot.code }} </span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Lot Name</mat-label>
+      <input matInput name="Lot Name" [(ngModel)]="L_NAME" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Sr No.</mat-label>
+      <input matInput name="Sr No." [(ngModel)]="SRNO" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput name="Tag" [(ngModel)]="TAG" (blur)="GrdEntDisplay()" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Carat</mat-label>
+      <input matInput type="number" name="Carat" [ngModel]="I_CARAT | setFloat:3"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_CARAT = $event" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>MSRNO</mat-label>
+      <input matInput name="MSrNo" [(ngModel)]="MSRNO" (blur)="GrdEntDisplay()" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>StoneID</mat-label>
+      <input matInput name="Stone ID" [(ngModel)]="STONEID" (blur)="GrdEntDisplay()" />
+    </mat-form-field>
+    <mat-checkbox class="example-margin" [(ngModel)]="MANPER">Manual Per(%)</mat-checkbox>
+  </section>
+
+  <section class="grd-ent__container--row-2">
+    <section class="grd-ent__container--col">
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Shape Code</mat-label>
+          <input matInput name="Shape Code" [matAutocomplete]="autoSHAPE" [formControl]="ShapeControl"
+            [(ngModel)]="S_CODE" (ngModelChange)="GetName(S_CODE, 'S_NAME', shps)" (blur)="findrap()" />
+          <mat-autocomplete #autoSHAPE="matAutocomplete">
+            <mat-option *ngFor="let shp of filteredShps | async" [value]="shp.code">
+              <span>{{ shp.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Shape Name</mat-label>
+          <input matInput name="Shape Name" [(ngModel)]="S_NAME" disabled>
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>COpen Code</mat-label>
+            <input matInput name="COpen Code" [matAutocomplete]="autoCOPEN" [formControl]="COpenControl"
+              [(ngModel)]="COPEN_CODE" (ngModelChange)="GetName(COPEN_CODE, 'COPEN_NAME', copens)" (blur)="findrap()" />
+            <mat-autocomplete #autoCOPEN="matAutocomplete">
+              <mat-option *ngFor="let copen of filteredCOpens | async" [value]="copen.code">
+                <span>{{ copen.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>COpen Name</mat-label>
+            <input matInput name="COpen Code" [(ngModel)]="COPEN_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Color Code</mat-label>
+          <input matInput name="Color Code" [matAutocomplete]="autoCOLOR" [formControl]="ColorControl"
+            [(ngModel)]="C_CODE" (ngModelChange)="GetName(C_CODE, 'C_NAME', colors)" (blur)="findrap()" />
+          <mat-autocomplete #autoCOLOR="matAutocomplete">
+            <mat-option *ngFor="let clr of filteredColors | async" [value]="clr.code">
+              <span>{{ clr.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>CName</mat-label>
+          <input matInput name="Color Name" [(ngModel)]="C_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>GOpen Code</mat-label>
+            <input matInput name="GOpen Code" [matAutocomplete]="autoGOPEN" [formControl]="GOpenControl"
+              [(ngModel)]="GOPEN_CODE" (ngModelChange)="GetName(GOPEN_CODE, 'GOPEN', gopens)" (blur)="findrap()" />
+            <mat-autocomplete #autoGOPEN="matAutocomplete">
+              <mat-option *ngFor="let gopen of filteredGOpens | async" [value]="gopen.code">
+                <span>{{ gopen.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>GOpen Name</mat-label>
+            <input matInput name="COpen Name" [(ngModel)]="GOPEN_NAME" disabled />
+          </mat-form-field>
+        </div>
+
+
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Clarity Code</mat-label>
+          <input matInput name="Clarity Code" [matAutocomplete]="autoCLARITTY" [formControl]="QuaControl"
+            [(ngModel)]="Q_CODE" (ngModelChange)="GetName(Q_CODE, 'Q_NAME', quas)" (blur)="findrap()" />
+          <mat-autocomplete #autoCLARITTY="matAutocomplete">
+            <mat-option *ngFor="let qua of filteredQuas | async" [value]="qua.code">
+              <span>{{ qua.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Clarity Name</mat-label>
+          <input matInput name="QName" [(ngModel)]="Q_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>Graining Code</mat-label>
+            <input matInput name="Graining Code" [matAutocomplete]="autoGRN" [formControl]="GrainingControl"
+              [(ngModel)]="GRN_CODE" (ngModelChange)="GetName(GRN_CODE, 'GRN_NAME', grainings)" (blur)="findrap()" />
+            <mat-autocomplete #autoGRN="matAutocomplete">
+              <mat-option *ngFor="let grn of filteredGrainings | async" [value]="grn.code">
+                <span>{{ grn.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Graining Name</mat-label>
+            <input matInput name="Graining Name" [(ngModel)]="GRN_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Cut Code</mat-label>
+          <input matInput name="Cut Code" [matAutocomplete]="autoCUT" [formControl]="CutControl" [(ngModel)]="CT_CODE"
+            (ngModelChange)="GetName(CT_CODE, 'CT_NAME', cuts)" (blur)="findrap()" />
+          <mat-autocomplete #autoCUT="matAutocomplete">
+            <mat-option *ngFor="let cut of filteredCuts | async" [value]="cut.code">
+              <span>{{ cut.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Cut Name</mat-label>
+          <input matInput name="Cut Name" [(ngModel)]="CT_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>Milky Code</mat-label>
+            <input matInput name="Milky Code" [matAutocomplete]="autoMLK" [formControl]="MilkyControl"
+              [(ngModel)]="MLK_CODE" (ngModelChange)="GetName(MLK_CODE, 'MLK_NAME', milkys)" (blur)="findrap()" />
+            <mat-autocomplete #autoMLK="matAutocomplete">
+              <mat-option *ngFor="let mlk of filteredMilkys | async" [value]="mlk.code">
+                <span>{{ mlk.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Milky Name</mat-label>
+            <input matInput name="Milky Name" [(ngModel)]="MLK_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Polish Code</mat-label>
+          <input matInput name="Polish Code" [matAutocomplete]="autoPOLISH" [formControl]="PolControl"
+            [(ngModel)]="POL_CODE" (ngModelChange)="GetName(POL_CODE, 'POL_NAME', pols)" (blur)="findrap()" />
+          <mat-autocomplete #autoPOLISH="matAutocomplete">
+            <mat-option *ngFor="let pol of filteredPols | async" [value]="pol.code">
+              <span>{{ pol.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Polish Name</mat-label>
+          <input matInput name="Polish Name" [(ngModel)]="POL_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>PavOpen Code</mat-label>
+            <input matInput name="PavOpen Code" [matAutocomplete]="autoPOPEN" [formControl]="POpenControl"
+              [(ngModel)]="POPEN_CODE" (ngModelChange)="GetName(POPEN_CODE, 'POPEN_NAME', popens)" (blur)="findrap()" />
+            <mat-autocomplete #autoPOPEN="matAutocomplete">
+              <mat-option *ngFor="let popen of filteredPOpens | async" [value]="popen.code">
+                <span>{{ popen.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>PavOpen Name</mat-label>
+            <input matInput name="PavOpen Name" [(ngModel)]="POPEN_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Sym Code</mat-label>
+          <input matInput name="Sym Code" [matAutocomplete]="autoSYM" [formControl]="SymControl" [(ngModel)]="SYM_CODE"
+            (ngModelChange)="GetName(SYM_CODE, 'SYM_NAME', syms)" (blur)="findrap()" />
+          <mat-autocomplete #autoSYM="matAutocomplete">
+            <mat-option *ngFor="let sym of filteredSyms | async" [value]="sym.code">
+              <span>{{ sym.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sym Name</mat-label>
+          <input matInput name="Sym Name" [(ngModel)]="SYM_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>RedSpot Code</mat-label>
+            <input matInput name="RedSpot Code" [matAutocomplete]="autoRSPT" [formControl]="RedSpotControl"
+              [(ngModel)]="RSPOT_CODE" (ngModelChange)="GetName(RSPOT_CODE, 'RSPOT_NAME', rspots)" (blur)="findrap()" />
+            <mat-autocomplete #autoRSPT="matAutocomplete">
+              <mat-option *ngFor="let rspt of filteredRedSpot | async" [value]="rspt.code">
+                <span>{{ rspt.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>RedSpot Name</mat-label>
+            <input matInput name="RedSpot Name" [(ngModel)]="RSPOT_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Flo Code</mat-label>
+          <input matInput name="Flo Code" [matAutocomplete]="autoFLO" [formControl]="FloControl" [(ngModel)]="FL_CODE"
+            (ngModelChange)="GetName(FL_CODE, 'FL_NAME', flos)" (blur)="findrap()" />
+          <mat-autocomplete #autoFLO="matAutocomplete">
+            <mat-option *ngFor="let flo of filteredFlos | async" [value]="flo.code">
+              <span>{{ flo.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Flo Name</mat-label>
+          <input matInput name="Flo Name" [(ngModel)]="FL_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>Side Code</mat-label>
+            <input matInput name="Side Code" [matAutocomplete]="autoSIDE" [formControl]="SideControl"
+              [(ngModel)]="SIDE_CODE" (ngModelChange)="GetName(SIDE_CODE, 'SIDE_NAME', sides)" (blur)="findrap()" />
+            <mat-autocomplete #autoSIDE="matAutocomplete">
+              <mat-option *ngFor="let side of filteredSide | async" [value]="side.code">
+                <span>{{ side.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Side Name</mat-label>
+            <input matInput name="Side Name" [(ngModel)]="SIDE_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Shade Code</mat-label>
+          <input matInput name="Shade Code" [matAutocomplete]="autoSHD" [formControl]="ShadeControl"
+            [(ngModel)]="SH_CODE" (ngModelChange)="GetName(SH_CODE, 'SH_NAME', shades)" (blur)="findrap()" />
+          <mat-autocomplete #autoSHD="matAutocomplete">
+            <mat-option *ngFor="let shade of filteredShades | async" [value]="shade.code">
+              <span>{{ shade.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Shade Name</mat-label>
+          <input matInput name="Shade Name" [(ngModel)]="SH_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>Inclusion Code</mat-label>
+            <input matInput name="Inclusion Code" [matAutocomplete]="autoINC" [formControl]="IncControl"
+              [(ngModel)]="INC_CODE" (ngModelChange)="GetName(INC_CODE, 'INC_NAME', incs)" (blur)="findrap()" />
+            <mat-autocomplete #autoINC="matAutocomplete">
+              <mat-option *ngFor="let inc of filteredIncs | async" [value]="inc.code">
+                <span>{{ inc.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Inclusion Name</mat-label>
+            <input matInput name="Inclusion Name" [(ngModel)]="INC_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>LC/WH</mat-label>
+          <input matInput name="LC/WH" [matAutocomplete]="autoRAP" [formControl]="RAPTypeControl"
+            [(ngModel)]="RAPTYPE_CODE" (ngModelChange)="GetName(RAPTYPE_CODE, 'RAPTYPE_NAME', raptyps)"
+            (blur)="findrap()" />
+          <mat-autocomplete #autoRAP="matAutocomplete">
+            <mat-option *ngFor="let rap of filteredRAPTypes | async" [value]="rap.code">
+              <span>{{ rap.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>LC/WH</mat-label>
+          <input matInput name="LC/WH" [(ngModel)]="RAPTYPE_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>TableBlack Code</mat-label>
+            <input matInput name="TableBlack Code" [matAutocomplete]="autoTBLACK" [formControl]="TabBlackControl"
+              [(ngModel)]="TBLACK_CODE" (ngModelChange)="GetName(TBLACK_CODE, 'TBLACK_NAME', tblacks)"
+              (blur)="findrap()" />
+            <mat-autocomplete #autoTBLACK="matAutocomplete">
+              <mat-option *ngFor="let tblack of filteredTabBlacks | async" [value]="tblack.code">
+                <span>{{ tblack.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>TableBlack Name</mat-label>
+            <input matInput name="TableBlack Name" [(ngModel)]="TBLACK_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Luster Code</mat-label>
+          <input matInput name="Luster Code" [matAutocomplete]="autoLUSTER" [formControl]="LusterControl"
+            [(ngModel)]="LS_CODE" (ngModelChange)="GetName(LS_CODE, 'LS_NAME', lusters)" (blur)="findrap()" />
+          <mat-autocomplete #autoLUSTER="matAutocomplete">
+            <mat-option *ngFor="let luster of filteredLusters | async" [value]="luster.code">
+              <span>{{ luster.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Luster</mat-label>
+          <input matInput name="Luster" [(ngModel)]="LS_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>SideBlack Code</mat-label>
+            <input matInput name="SideBlack Code" [matAutocomplete]="autoSBLACK" [formControl]="SideBlackControl"
+              [(ngModel)]="SBLACK_CODE" (ngModelChange)="GetName(SBLACK_CODE, 'SBLACK_NAME', sblacks)"
+              (blur)="findrap()" />
+            <mat-autocomplete #autoSBLACK="matAutocomplete">
+              <mat-option *ngFor="let sblack of filteredTabBlacks | async" [value]="sblack.code">
+                <span>{{ sblack.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>SideBlack Name</mat-label>
+            <input matInput name="SideBlack Name" [(ngModel)]="SBLACK_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Heart Code</mat-label>
+          <input matInput name="Heart Code" [matAutocomplete]="autoHEART" [formControl]="HeartControl"
+            [(ngModel)]="HRT_CODE" (ngModelChange)="GetName(HRT_CODE, 'HRT_NAME', hearts)" (blur)="findrap()" />
+          <mat-autocomplete #autoHEART="matAutocomplete">
+            <mat-option *ngFor="let heart of filteredHearts | async" [value]="heart.code">
+              <span>{{ heart.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Heart</mat-label>
+          <input matInput name="Heart" [(ngModel)]="HRT_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>Table Code</mat-label>
+            <input matInput name="Table Code" [matAutocomplete]="autoTABLE" [formControl]="TabControl"
+              [(ngModel)]="TAB_CODE" (ngModelChange)="GetName(TAB_CODE, 'TAB_NAME', tables)" (blur)="findrap()" />
+            <mat-autocomplete #autoTABLE="matAutocomplete">
+              <mat-option *ngFor="let tab of filteredTabs | async" [value]="tab.code">
+                <span>{{ tab.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Table Name</mat-label>
+            <input matInput name="Table Name" [(ngModel)]="TAB_NAME" disabled />
+          </mat-form-field>
+        </div>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Culet Code</mat-label>
+          <input matInput name="Culet Code" [matAutocomplete]="autoCULET" [formControl]="CuletControl"
+            [(ngModel)]="CU_CODE" (ngModelChange)="GetName(CU_CODE, 'CU_NAME', culets)" (blur)="findrap()" />
+          <mat-autocomplete #autoCULET="matAutocomplete">
+            <mat-option *ngFor="let culet of filteredCulets | async" [value]="culet.code">
+              <span>{{ culet.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Culet Name</mat-label>
+          <input matInput name="Culet Name" [(ngModel)]="CU_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+
+        </div>
+
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>EyeClean Code</mat-label>
+          <input matInput name="EyeClean Code" [matAutocomplete]="autoEC" [formControl]="EyeCleanControl"
+            [(ngModel)]="EC_CODE" (ngModelChange)="GetName(EC_CODE, 'EC_NAME', eyecleans)" (blur)="findrap()" />
+          <mat-autocomplete #autoEC="matAutocomplete">
+            <mat-option *ngFor="let ec of filteredeyeCLeans | async" [value]="ec.code">
+              <span>{{ ec.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>EyeClean Name</mat-label>
+          <input matInput name="EyeClean Name" [(ngModel)]="EC_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>PolishGrd</mat-label>
+            <input matInput name="PolishGrd" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>PolishGrd</mat-label>
+            <input matInput name="PolishGrd" />
+          </mat-form-field>
+        </div>
+
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>ExtraFacet Code</mat-label>
+          <input matInput name="ExtraFacet Code" [matAutocomplete]="autoEFCT" [formControl]="ExtFctControl"
+            [(ngModel)]="EFCT_CODE" (ngModelChange)="GetName(EFCT_CODE, 'EFCT_NAME', extfcts)" (blur)="findrap()" />
+          <mat-autocomplete #autoEFCT="matAutocomplete">
+            <mat-option *ngFor="let efct of filteredextFcts | async" [value]="efct.code">
+              <span>{{ efct.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>ExtraFacet Name</mat-label>
+          <input matInput name="ExtraFacet Name" [(ngModel)]="EFCT_NAME" disabled />
+        </mat-form-field>
+        <div class="multi">
+          <mat-form-field appearance="outline">
+            <mat-label>Lab Code</mat-label>
+            <input matInput name="Lab Code" [matAutocomplete]="autoLAB" [formControl]="LabControl"
+              [(ngModel)]="LAB_CODE" (ngModelChange)="GetName(LAB_CODE, 'LAB_NAME', labs)" />
+            <mat-autocomplete #autoLAB="matAutocomplete">
+              <mat-option *ngFor="let lab of filteredLabs | async" [value]="lab.code">
+                <span>{{ lab.code }} </span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Lab Name</mat-label>
+            <input matInput name="Lab Name" [(ngModel)]="LAB_NAME" disabled />
+          </mat-form-field>
+        </div>
+
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>TableOpen Code</mat-label>
+          <input matInput name="TableOpen Code" [matAutocomplete]="autoTABOEPN" [formControl]="TABOpenControl"
+            [(ngModel)]="TABOPEN_CODE" (ngModelChange)="GetName(TABOPEN_CODE , 'TABOPEN_NAME', tabOepns)"
+            (blur)="findrap()" />
+          <mat-autocomplete #autoTABOEPN="matAutocomplete">
+            <mat-option *ngFor="let tbopen of filteredtabOpens | async" [value]="tbopen.code">
+              <span>{{ tbopen.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>TableOpen Name</mat-label>
+          <input matInput name="TableOpen Name" [(ngModel)]="TABOPEN_NAME" disabled />
+        </mat-form-field>
+
+
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>SideOpen Code</mat-label>
+          <input matInput name="SideOpen Code" [matAutocomplete]="autoSIDEOEPN" [formControl]="SDOpenControl"
+            [(ngModel)]="SDOPEN_CODE" (ngModelChange)="GetName(SDOPEN_CODE, 'SDOPEN_NAME', sideOepns)"
+            (blur)="findrap()" />
+          <mat-autocomplete #autoSIDEOEPN="matAutocomplete">
+            <mat-option *ngFor="let sdopen of filteredsideOpens | async" [value]="sdopen.code">
+              <span>{{ sdopen.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>SideOpen Name</mat-label>
+          <input matInput name="SideOpen Name" [(ngModel)]="SDOPEN_NAME" disabled />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Natural Code</mat-label>
+          <input matInput name="Natural Code" [matAutocomplete]="autoNATURAL" [formControl]="NaturalControl"
+            [(ngModel)]="NATURAL_CODE" (ngModelChange)="GetName(NATURAL_CODE, 'NATURAL_NAME', naturals)"
+            (blur)="findrap()" />
+          <mat-autocomplete #autoNATURAL="matAutocomplete">
+            <mat-option *ngFor="let nat of filteredNaturals | async" [value]="nat.code">
+              <span>{{ nat.code }} </span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Natural Code</mat-label>
+          <input matInput name="Natural Name" [(ngModel)]="NATURAL_NAME" disabled />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields full-width">
+        <mat-form-field appearance="outline">
+          <mat-label>Comment</mat-label>
+          <input matInput name="Comment" [(ngModel)]="COMNT" />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields full-width">
+        <mat-form-field appearance="outline">
+          <mat-label>Surat Note</mat-label>
+          <input matInput name="Surat Note" [(ngModel)]="SRTNOTE" />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Table(%)</mat-label>
+          <input matInput name="Table(%)" [(ngModel)]="GRDTAB_CODE" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Length</mat-label>
+          <input matInput name="Length" [(ngModel)]="GRDLENTH" />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields">
+        <mat-form-field appearance="outline">
+          <mat-label>Diameter</mat-label>
+          <input matInput name="Diameter" [(ngModel)]="GRDDIA_CODE" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Width</mat-label>
+          <input matInput name="Width" [(ngModel)]="GRDWIDTH" />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields multi-3">
+        <mat-form-field appearance="outline">
+          <mat-label>TotDepth(%)</mat-label>
+          <input matInput name="TotDepth(%)" [(ngModel)]="GRDTDEPTH" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Gridle(%)</mat-label>
+          <input matInput name="Gridle(%)" [(ngModel)]="GRDGRIDLE_CODE" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>RegRate</mat-label>
+          <input matInput name="RegRate" [(ngModel)]="GRDRATE" disabled />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="grd-ent__fields multi-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Depth</mat-label>
+          <input matInput name="Depth" [(ngModel)]="GRDDEPTH_CODE" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ratio</mat-label>
+          <input matInput name="Ratio" [(ngModel)]="GRDRAT_CODE" />
+        </mat-form-field>
+        <div class="chkbxs">
+          <mat-checkbox>Is Regular</mat-checkbox>
+          <mat-checkbox>Auto Brk</mat-checkbox>
+        </div>
+      </fieldset>
+
+
+
+    </section>
+    <section class="grd-ent__container--col">
+
+      <mat-form-field appearance="outline">
+        <mat-label>GShape</mat-label>
+        <input matInput type="text" name="GShape" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>GColor</mat-label>
+        <input matInput type="text" name="GColor" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>GQuality</mat-label>
+        <input matInput type="text" name="GQuality" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>GCut</mat-label>
+        <input matInput type="text" name="GCut" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>GPolish</mat-label>
+        <input matInput type="text" name="GPolish" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>GSym</mat-label>
+        <input matInput type="text" name="GSym" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>GFloro</mat-label>
+        <input matInput type="text" name="GFloro" disabled />
+      </mat-form-field>
+
+      <div class="multi">
+        <mat-form-field appearance="outline">
+          <mat-label>GSHCode</mat-label>
+          <input matInput type="text" name="GSHCode" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>GSHName</mat-label>
+          <input matInput type="text" name="GSHName" disabled />
+        </mat-form-field>
+      </div>
+
+
+    </section>
+    <section class="grd-ent__container--col">
+      <mat-form-field appearance="outline">
+        <mat-label>SDesc</mat-label>
+        <input matInput type="text" name="SDesc" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CDesc</mat-label>
+        <input matInput type="text" name="CDesc" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Clarity Status</mat-label>
+        <input matInput type="text" name="Clarity Status" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Proportion</mat-label>
+        <input matInput type="text" name="Proportion" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>P. Angle</mat-label>
+        <input matInput name="P. Angle" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>P. Height(%)</mat-label>
+        <input matInput name="P. Height(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>C. Angle</mat-label>
+        <input matInput name="C. Angle" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>C. Height(%)</mat-label>
+        <input matInput name="C. Height(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Measure</mat-label>
+        <input matInput name="Measure" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>StrLn(%)</mat-label>
+        <input matInput name="StrLn(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>LrHalf(%)</mat-label>
+        <input matInput name="LrHalf(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Height</mat-label>
+        <input matInput name="Height" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Griddle(%)</mat-label>
+        <input matInput name="Griddle(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Griddle(Desc)</mat-label>
+        <input matInput name="Griddle(Desc)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Total Depth(%)</mat-label>
+        <input matInput name="Total Depth(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Table(%)</mat-label>
+        <input matInput name="Table(%)" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Diameter</mat-label>
+        <input matInput name="Diameter" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Culete Size</mat-label>
+        <input matInput name="Culete Size" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Pol Features</mat-label>
+        <input matInput name="Pol Features" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Sym Features</mat-label>
+        <input matInput name="Sym Features" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Key To Sym</mat-label>
+        <input matInput name="Key To Sym" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Report Comments</mat-label>
+        <input matInput name="Report Comments" disabled />
+      </mat-form-field>
+      <p>IMAGE</p>
+
+    </section>
+
+    <section class="grd-ent__container--col">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Party</mat-label>
+        <input matInput name="Party" [(ngModel)]="PEMP_CODE" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Employee</mat-label>
+        <input matInput name="Employee" [(ngModel)]="EMP_CODE" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Issue Date</mat-label>
+        <input matInput name="Issue Date" [(ngModel)]="I_DATE" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Out Date</mat-label>
+        <input matInput name="Out Date" [(ngModel)]="OU_DATE" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Report Date</mat-label>
+        <input matInput name="CCode" [(ngModel)]="REP_DATE" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Out No</mat-label>
+        <input matInput name="Out No" [(ngModel)]="OUNO" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Cert No</mat-label>
+        <input matInput name="Cert No" [(ngModel)]="CERTNO" disabled />
+      </mat-form-field>
+      <div class="grd-ent-grid">
+        <ag-grid-angular style="width: 100%; height: 95%" class="ag-theme-alpine prc-mak-ag-grid"
+          [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)"
+          [animateRows]="true">
+        </ag-grid-angular>
+      </div>
+      <div class="grd-ent-grid">
+        <ag-grid-angular style="width: 100%; height: 95%" class="ag-theme-alpine prc-mak-ag-grid"
+          [defaultColDef]="defaultColDef2" [columnDefs]="columnDefs2" (gridReady)="onGridReady2($event)"
+          [animateRows]="true">
+        </ag-grid-angular>
+      </div>
+
+    </section>
+  </section>
+  <section class="grd-ent__container--row-3">
+    <button class="btn theme-btn" matTooltip='GIA Import' matTooltipClass="custom-tooltip" (click)="GIAImport()">GIA
+      Import</button>
+    <button class="btn theme-btn" matTooltip='ReGIA Import' matTooltipClass="custom-tooltip">ReGIA Import</button>
+    <button class="btn theme-btn" matTooltip='Image' matTooltipClass="custom-tooltip">Image</button>
+    <button class="btn theme-btn" matTooltip='Video' matTooltipClass="custom-tooltip">Video</button>
+    <button class="btn theme-btn" matTooltip='Breaking' matTooltipClass="custom-tooltip">Breaking</button>
+    <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()">Save</button>
+    <button class="btn theme-btn" matTooltip='New' matTooltipClass="custom-tooltip" (click)="Clear()">New</button>
+    <button class="btn theme-btn" matTooltip='Delete' matTooltipClass="custom-tooltip">Delete</button>
+  </section>
+</div>

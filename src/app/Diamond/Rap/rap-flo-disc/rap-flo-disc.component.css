@@ -1,0 +1,23 @@
+.disc__container {
+  display: grid;
+  grid-template-columns: 1fr 10vw;
+  grid-gap: 0.5rem;
+}
+
+.disc__container--col-1 {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-gap: 0.5rem;
+}
+
+.disc__container--row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  justify-items: start;
+  align-items: center;
+  grid-column-gap: 0.5rem;
+}
+
+:host .radio-btn:not(:last-child) {
+  margin-right: 0.5rem;
+}

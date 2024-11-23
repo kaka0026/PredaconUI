@@ -1,0 +1,142 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input matInput type="text" name="L Code" (blur)="GetMaxSRNO()" [(ngModel)]="L_CODE" tabindex="1"
+        (keypress)="nextenter($event,'pktentsrno')" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sr No</mat-label>
+      <input matInput type="number" name="Sr No" (keydown.enter)="FILLFIELD()" (blur)="FILLFIELD()" autocomplete="off"
+        [(ngModel)]="SRNO" (keypress)="nextenter($event,'pktentemp')" id='pktentsrno' tabindex="2" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" autocomplete="off" [(ngModel)]="TAG"
+        (ngModelChange)="TAG = $event.toUpperCase()" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>PNT</mat-label>
+      <input matInput type="number" name="PNT" autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Emp Code</mat-label>
+      <input #szInput (keyup)="0" matInput name="Employee" aria-label="Employee" [formControl]="empCtrl"
+        [(ngModel)]="EMP_CODE" (ngModelChange)="EMP_CODE = $event.toUpperCase();EmpDetChange($event)"
+        [matAutocomplete]="autoEmp" tabindex="3" id="pktentemp" (keypress)="nextenter($event,'pktentipcs')" />
+      <mat-autocomplete #autoEmp="matAutocomplete">
+        <mat-option *ngFor="let emp of filteredemps | async" [value]="emp.code">
+          <span>{{emp.code}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>GRP</mat-label>
+      <input matInput type="text" name="GRP" autocomplete="off" [(ngModel)]="GRP"
+        (ngModelChange)="GRP = $event.toUpperCase()" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>GRD</mat-label>
+      <input matInput type="text" name="GRD" autocomplete="off" [(ngModel)]="GRD"
+        (ngModelChange)="GRD = $event.toUpperCase()" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>MFL Code</mat-label>
+      <input matInput type="text" name="MFL Code" aria-label="MFL Code" [matAutocomplete]="autoMFL"
+        [formControl]="mflCtrl" [(ngModel)]="MFL_CODE" />
+      <mat-autocomplete #autoMFL="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredMFls | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>MC Code</mat-label>
+      <input type="text" matInput name="MC Code" aria-label="MC Code" [matAutocomplete]="autoMC" [formControl]="mcCtrl"
+        [(ngModel)]="MC_CODE" />
+      <mat-autocomplete #autoMC="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredMCs | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>I Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="I_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>I Time</mat-label>
+      <input matInput type="text" name="I Time" autocomplete="off" [(ngModel)]="I_TIME" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>I No</mat-label>
+      <input matInput type="number" name="I No" autocomplete="off" [(ngModel)]="INO" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>I Pcs</mat-label>
+      <input matInput type="number" name="I Pcs" autocomplete="off" [(ngModel)]="I_PCS" tabindex="4" id="pktentipcs"
+        (keypress)="nextenter($event,'pktenticarat')" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>I Carat</mat-label>
+      <input matInput type="number" name="I Carat" autocomplete="off" [ngModel]="I_CARAT | setFloat:3" id="icarat"
+        tabindex="5" id="pktenticarat" (keypress)="nextenter($event,'pktentsave')"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="I_CARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>ASS No</mat-label>
+      <input matInput type="text" name="ASS No" autocomplete="off" [(ngModel)]="ASSNO"
+        (ngModelChange)="ASSNO = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>EDOL</mat-label>
+      <input matInput type="number" name="EDOL" autocomplete="off" [(ngModel)]="EDOL"
+        onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45 || event.charCode == 189 || event.charCode == 46)' />
+    </mat-form-field>
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()"
+        (keypress)="nextenter($event,'pktenticarat')" tabindex="6" id="pktentsave">
+        <i class="icon-save mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <i class="icon-refresh mat-icon"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 65vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)' [pinnedBottomRowData]="pinnedBottomRowData"
+      [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+  </div>
+  <div class="mast__container--row-3">
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Barcode' matTooltipClass="custom-tooltip" (click)="BARCODE()">
+        <i class="icon-barcode mat-icon"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

@@ -1,0 +1,9 @@
+:host section {
+  display: flex;
+  grid-row: 3;
+  gap: 5px;
+}
+
+:host .btn-grp {
+  grid-row: 3;
+}

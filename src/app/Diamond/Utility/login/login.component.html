@@ -1,0 +1,29 @@
+<div class="login__container">
+  <div class="login__form">
+    <section class="logo">
+      <span class="logo-txt">LOGO</span>
+    </section>
+    <section class="form">
+      <h1 class="heading-1"> Sign In</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+        <fieldset class="login__fields">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" formControlName="UserId" autocapitalize="off">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" formControlName="password" type="password" autocapitalize="off">
+          </mat-form-field>
+
+          <button [disabled]="!loginForm.valid" mat-raised-button color="primary" class="btn theme-btn"
+            mat-button>Login</button>
+        </fieldset>
+      </form>
+    </section>
+  </div>
+</div>
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

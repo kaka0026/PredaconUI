@@ -1,0 +1,56 @@
+<div class="mast__container">
+
+  <div class="mast__container--row-1">
+
+    <mat-form-field appearance="outline">
+      <mat-label>PNT</mat-label>
+      <input matInput type="number" name="PNT" autocomplete="off" [(ngModel)]="PNT" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="M_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>INo</mat-label>
+      <input matInput type="number" name="INo" autocomplete="off" [(ngModel)]="INO" (keydown.enter)="LoadGridData()" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width lot-1" appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input matInput name="L Code" autocomplete="off" [(ngModel)]="L_CODE" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>SR No.</mat-label>
+      <input matInput type="number" [(ngModel)]="SRNO" name="SR No." autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width tag-1" appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" [(ngModel)]="TAG" (ngModelChange)="TAG = $event.toUpperCase()"
+        (keydown.enter)="Save()" />
+    </mat-form-field>
+
+  </div>
+
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+    </ag-grid-angular>
+  </div>
+
+  <div class="btn-grp">
+    <button class="btn theme-btn" matTooltip='Barcode' matTooltipClass="custom-tooltip" (click)="BARCODE()">
+      <i class="icon-barcode mat-icon"></i>
+    </button>
+
+    <button class="btn theme-btn" matTooltip='Print' matTooltipClass="custom-tooltip" (click)="PRINT()">
+      <i class="icon-print mat-icon"></i>
+    </button>
+  </div>
+
+</div>

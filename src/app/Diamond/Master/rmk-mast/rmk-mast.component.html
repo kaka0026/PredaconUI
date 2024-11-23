@@ -1,0 +1,34 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>R Code</mat-label>
+      <input matInput type="number" name="R_CODE" autocomplete="off" [(ngModel)]="R_CODE" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>R Name</mat-label>
+      <input matInput type="name" name="R_NAME" autocomplete="off" [(ngModel)]="R_NAME"
+        (ngModelChange)="R_NAME = $event.toUpperCase()" />
+    </mat-form-field>
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()">
+        <i class="icon-save mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <i class="icon-refresh mat-icon"></i>
+      </button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>

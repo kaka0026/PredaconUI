@@ -1,0 +1,135 @@
+::ng-deep.mat-form-field-infix {
+  font-size: 0.7rem;
+}
+
+.brk-ent__container {
+  min-height: 85vh !important;
+  padding: 1rem;
+
+  display: grid;
+  grid-template-rows: auto auto 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+
+.brk-ent__container--row-1 {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  color: purple;
+}
+
+.rad-grp {
+  border: 1px solid #30312e;
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.rad-btn:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.brk-ent__container--row-2 {
+  max-width: inherit;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 0.5rem;
+}
+
+.grid-col-1 {
+  padding-right: 0.5rem;
+  border-right: 1px solid #30312e;
+}
+
+.grid-col-1,
+.grid-col-2 {
+  max-width: inherit;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-column-gap: 0.5rem;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 0.5rem;
+}
+
+.grid-col-1 > mat-form-field {
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+}
+
+.grid-col-2 > mat-form-field {
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+}
+
+.emp {
+  grid-row: 4 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.emp-name {
+  grid-row: 4 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.emp-empty {
+  grid-row: 4 / span 1;
+  grid-column: 3 / span 1;
+}
+
+.party {
+  grid-row: 5 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.party-name {
+  grid-row: 5 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.pdate {
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.ptime {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.diff-dol {
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.rough {
+  grid-row: 3 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.remark {
+  grid-row: 4 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.remark-name {
+  grid-row: 4 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.password {
+  grid-row: 5 / span 1;
+}
+
+.diff-carat {
+  grid-row: 5 / span 1;
+}
+
+.btns {
+  grid-row: 5 / span 1;
+  grid-column: 3 / span 2;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 1rem;
+}

@@ -1,0 +1,124 @@
+<div class="disc__container">
+  <div class="disc__container--col-1">
+    <div class="disc__container--row">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="RAPTYPE" class="radio-grp">
+        <mat-radio-button *ngFor="let item of RAPTARR" [value]="item.code" class="radio-btn">{{item.name}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="RTYPE" class="radio-grp">
+        <mat-radio-button *ngFor="let item of RTARR" [value]="item.code" class="radio-btn"
+          (change)="radioChange(item.DISP)">{{item.name}}</mat-radio-button>
+      </mat-radio-group>
+      <div class="btn-grp">
+        <button class="btn theme-btn" matTooltip='Export' (click)='EXPORT()' matTooltipClass="custom-tooltip">
+          <i class="icon-export mat-icon"></i>
+        </button>
+
+        <button class="btn theme-btn ml-auto" matTooltip='Import' matTooltipClass="custom-tooltip">
+          <i class="icon-import mat-icon"></i>
+          <label for="XlsInput1"></label>
+          <input type="file" id="XlsInput1" class="btn d-none" (change)="IMPORT($event)" #Import />
+        </button>
+
+        <button class="btn theme-btn" matTooltip='Compare' matTooltipClass="custom-tooltip">Compare</button>
+      </div>
+    </div>
+    <div class="disc__container--row">
+      <mat-form-field appearance="outline">
+        <mat-label>Size code</mat-label>
+        <input matInput placeholder="Size Code" aria-label="Size Code" [matAutocomplete]="autoSZ" [formControl]="szCtrl"
+          [(ngModel)]="SZ_CODE" (ngModelChange)="getSizeName()" />
+        <mat-autocomplete #autoSZ="matAutocomplete">
+          <mat-option *ngFor="let sz of filteredSzs | async" [value]="sz.code">
+            <span>{{ sz.code }} || {{sz.name}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="number" autocomplete="off" [ngModel]="F_SIZE | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_SIZE = $event" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="number" autocomplete="off" [ngModel]="T_SIZE | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_SIZE = $event" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Shape Code</mat-label>
+        <input matInput placeholder="Shape code" aria-label="Shape Code" [matAutocomplete]="autoSHP"
+          [formControl]="shpCtrl" [(ngModel)]="S_CODE" (ngModelChange)="getShapeName()" />
+        <mat-autocomplete #autoSHP="matAutocomplete">
+          <mat-option *ngFor="let shp of filteredShps | async" [value]="shp.code">
+            <span>{{ shp.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput autocomplete="off" [(ngModel)]="S_NAME" disabled>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" [hidden]="CUTVISIBLE">
+        <mat-label>Cut Code</mat-label>
+        <input matInput placeholder="Cut code" aria-label="Cut Code" [matAutocomplete]="autoCT" [formControl]="cutCtrl"
+          [(ngModel)]="CT_CODE" (ngModelChange)="getCutName()" />
+        <mat-autocomplete #autoCT="matAutocomplete">
+          <mat-option *ngFor="let shp of filteredCuts | async" [value]="shp.code">
+            <span>{{ shp.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field [hidden]="CUTVISIBLE" appearance="outline">
+        <input matInput autocomplete="off" [(ngModel)]="CT_NAME" disabled>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Params</mat-label>
+        <input matInput placeholder="Params" aria-label="Params" [matAutocomplete]="autoPARAM" [formControl]="paramCtrl"
+          [(ngModel)]="P_NAME" (ngModelChange)="DiameterFill()" />
+        <mat-autocomplete #autoPARAM="matAutocomplete">
+          <mat-option *ngFor="let shp of filteredParams | async" [value]="shp.name">
+            <span>{{ shp.name }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Param Code</mat-label>
+        <input matInput placeholder="Param Code" aria-label="Param Code" [matAutocomplete]="autoPARAMC"
+          [formControl]="paramcCtrl" [(ngModel)]="P_CODE" (ngModelChange)="getMeter()" />
+        <mat-autocomplete #autoPARAMC="matAutocomplete">
+          <mat-option *ngFor="let shp of filteredParamCs | async" [value]="shp.code">
+            <span>{{ shp.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="number" autocomplete="off" [ngModel]="F_METER | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_METER = $event" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="number" autocomplete="off" [ngModel]="T_METER | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_METER = $event" disabled />
+      </mat-form-field>
+    </div>
+    <ag-grid-angular style="width: 100%; height: calc(80vh - 130px);" class="ag-theme-alpine"
+      [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (cellValueChanged)="Cellvaluechange($event)" [enableCellChangeFlash]="true"
+      [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+  </div>
+  <div class="disc__container--col-2">
+    <ag-grid-angular style="width: 100%; height: 100%" class="ag-theme-alpine" [defaultColDef]="defaultColDef2"
+      [columnDefs]="columnDefs2" (gridReady)="onGridReady2($event)" [animateRows]="true" [enableCellChangeFlash]="true"
+      [frameworkComponents]="frameworkComponents2">
+    </ag-grid-angular>
+  </div>
+
+</div>

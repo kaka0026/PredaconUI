@@ -1,0 +1,14 @@
+.brk-view__container {
+  height: 85vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 0.5rem;
+}
+
+.brk-view__container--row-1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+  justify-items: start;
+  align-items: center;
+  grid-column-gap: 0.5rem;
+}

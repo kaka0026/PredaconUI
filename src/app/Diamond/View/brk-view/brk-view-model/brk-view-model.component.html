@@ -1,0 +1,9 @@
+<jqxGrid #grid1 (onCellendedit)="myGridOnCellEndEdit1($event)" [height]="175" [width]="getWidth1()"
+  [source]="dataAdapter1" [columns]="columns1" [editable]="editable1" [selectionmode]="'singlecell'"
+  (onCellendedit)="myGridOnCellEndEdit1($event)">
+</jqxGrid>
+
+<jqxGrid #grid2 (onCellendedit)="myGridOnCellEndEdit2($event)" [height]="175" [width]="getWidth2()"
+  [source]="dataAdapter2" [columns]="columns2" [editable]="editable2" [selectionmode]="'singlecell'"
+  (onCellendedit)="myGridOnCellEndEdit2($event)">
+</jqxGrid>

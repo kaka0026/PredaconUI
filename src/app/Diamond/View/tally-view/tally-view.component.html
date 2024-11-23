@@ -1,0 +1,129 @@
+<div class="tally-view__container">
+  <div class="tally-view__container--row-1">
+    <mat-form-field class="example-full-width lot-1" appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input #LOTInput (keyup)="0" (keydown)="keypressLOT($event,LOTInput.value)" (blur)="CheckLotVal(LOTInput.value)"
+        (keydown.f1)="OpenLotPopup($event)" matInput name="L Code" [matAutocomplete]="autoLOT"
+        [formControl]="LOTCtrl" />
+      <mat-autocomplete #autoLOT="matAutocomplete">
+        <mat-option (onSelectionChange)="LOTInput.value !=undefined && onEnterLOT($event)"
+          *ngFor="let lot of filteredLOTs | async" [value]="lot.CODE">
+          <span class="s-right">{{lot.CODE}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width lot-2" appearance="outline">
+      <input matInput type="text" [(ngModel)]="L_NAME" name="L Name" autocapitalize="off" disabled />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width lot-1" appearance="outline">
+      <input matInput type="number" [ngModel]="L_CARAT | setFloat:3" name="L Carat" autocapitalize="off"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="L_CARAT = $event" disabled />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width f-srno-1" appearance="outline">
+      <mat-label>F.SRNO</mat-label>
+      <input matInput type="number" name="F.SRNO" [(ngModel)]="FSRNO" autocapitalize="off" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width f-srno-1" appearance="outline">
+      <mat-label>T.SRNO</mat-label>
+      <input matInput type="number" name="T.SRNO" [(ngModel)]="TSRNO" autocapitalize="off" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width tag-1" appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" [(ngModel)]="TAG" (ngModelChange)="TAG = $event.toUpperCase()"
+        autocapitalize="off" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width emp-code-1" appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input matInput type="text" name="Employee" aria-label="Employee" [matAutocomplete]="autoEMP"
+        [formControl]="empCtrl" [(ngModel)]="EMP_CODE" (ngModelChange)="GETEMPNAME()" />
+      <mat-autocomplete #autoEMP="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredEmps | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width emp-name-1" appearance="outline">
+      <mat-label>Emp Name</mat-label>
+      <input matInput type="text" name="Emp Name" [(ngModel)]="EMPNAME" autocapitalize="off" disabled />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width prc-code-1" appearance="outline">
+      <mat-label>Process</mat-label>
+      <input matInput type="text" name="Prc" aria-label="Prc" [matAutocomplete]="autoPRC" [formControl]="prcCtrl"
+        [(ngModel)]="PRC_TYP" />
+      <mat-autocomplete #autoPRC="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredPrcs | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width man-1" appearance="outline">
+      <mat-label>Manager</mat-label>
+      <input matInput type="text" name="Manager" [matAutocomplete]="autoM" [formControl]="mCtrl" [(ngModel)]="M_CODE"
+        (ngModelChange)="GETMANEGERNAME();FillEmployee()" />
+      <mat-autocomplete #autoM="matAutocomplete">
+        <mat-option *ngFor="let ct of filteredMs | async" [value]="ct.code">
+          <span>{{ ct.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width man-name-2" appearance="outline">
+      <mat-label>Man Name</mat-label>
+      <input matInput type="text" name="Man Name" [(ngModel)]="M_NAME" autocapitalize="off" disabled />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width man-1" appearance="outline">
+      <mat-label>Party</mat-label>
+      <input matInput type="text" name="Party" [(ngModel)]="PARTY" (ngModelChange)="PARTY = $event.toUpperCase()"
+        autocapitalize="off" />
+    </mat-form-field>
+  </div>
+  <div class="tally-view__container--row-2">
+    <mat-radio-group [(ngModel)]="TPROC_CODE" class="col-span-4" (change)="FILLPRC()">
+      <mat-radio-button *ngFor="let item of PRArr" [value]="item.PRC_CODE" class="radio-btn">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="example-full-width f-srno-1" appearance="outline">
+      <mat-label>Lot</mat-label>
+      <input #tallylot matInput type="text" name="Lot" [(ngModel)]="L_CODE1" autocapitalize="off" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width f-srno-1" appearance="outline">
+      <mat-label>SrNo</mat-label>
+      <input matInput name="SrNo" type="number" [(ngModel)]="SRNO" autocapitalize="off" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width tag-1" appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" [(ngModel)]="TAG1" (ngModelChange)="TAG1 = $event.toUpperCase()"
+        (keydown.enter)="SAVE()" autocapitalize="off" />
+    </mat-form-field>
+    <div class="btn-grp">
+      <button id="dis" class="btn theme-btn" style="display:none;" (click)="SHOW()">Show</button>
+      <button class="btn theme-btn" (click)='REFRESH()'>Refresh</button>
+      <button class="btn theme-btn" (click)="CLEAR()">Clear</button>
+      <button class="btn theme-btn" (click)="CLEARALL()">Clear All</button>
+    </div>
+  </div>
+  <div class="tally-view__container--row-3">
+    <ag-grid-angular style="width: 100%; height: 65vh;" class="ag-theme-alpine grid1" [defaultColDef]="defaultColDefF"
+      [columnDefs]="columnDefsF" (gridReady)="onGridReadyF($event)" [animateRows]="true"
+      [pinnedBottomRowData]="pinnedBottomRowDataF" [frameworkComponents]="frameworkComponentsF">
+    </ag-grid-angular>
+
+    <ag-grid-angular style="width: 100%; height: 65vh;" class="ag-theme-alpine grid2" [defaultColDef]="defaultColDefS"
+      [columnDefs]="columnDefsS" (gridReady)="onGridReadyS($event)" [animateRows]="true"
+      [pinnedBottomRowData]="pinnedBottomRowDataS" [frameworkComponents]="frameworkComponentsS">
+    </ag-grid-angular>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+
+    <mat-form-field appearance="outline">
+      <mat-label>PNT</mat-label>
+      <input matInput type="number" name="PNT" autocomplete="off" [(ngModel)]="PNT" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="M_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>INo</mat-label>
+      <input matInput type="number" name="INo" autocomplete="off" [(ngModel)]="INO" (keydown.enter)="LoadGridData()" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width lot-1" appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input matInput type="text" name="L Code" id='lcode' autocomplete="off" [(ngModel)]="L_CODE" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>SR No.</mat-label>
+      <input matInput type="number" name="SR No." [(ngModel)]="SRNO" (ngModelChange)="SRNO = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width tag-1" appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" [(ngModel)]="TAG" (ngModelChange)="TAG = $event.toUpperCase()"
+        (keydown.enter)="Save()" />
+    </mat-form-field>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true">
+    </ag-grid-angular>
+  </div>
+  <div class="mast__container--row-3">
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Print' (click)="PRINT()" matTooltipClass="custom-tooltip">
+        <i class="icon-print mat-icon"></i>
+      </button>
+    </div>
+  </div>
+</div>

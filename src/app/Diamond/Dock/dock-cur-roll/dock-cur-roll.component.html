@@ -1,0 +1,21 @@
+<div class="dock_prc__container">
+  <div class="dock_prc__container--row-1">
+    <div class="dock">
+      <mat-form-field appearance="outline">
+        <mat-label>Grp</mat-label>
+        <input matInput placeholder="Grp" aria-label="Grp" [matAutocomplete]="autoGRP" [formControl]="grpCtrl"
+          [(ngModel)]="GRP">
+        <mat-autocomplete #autoGRP="matAutocomplete">
+          <mat-option *ngFor="let grp of filteredGrps | async" [value]="grp.code">
+            <span>{{ grp.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button class="btn theme-btn" (click)="Refresh()">Refresh</button>
+    </div>
+  </div>
+  <ag-grid-angular style="width: 100%; height: auto;" class="ag-theme-alpine mt-1" [defaultColDef]="defaultColDef"
+    [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+    (cellDoubleClicked)="onCellDoubleClicked($event)">
+  </ag-grid-angular>
+</div>

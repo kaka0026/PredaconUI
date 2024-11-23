@@ -1,0 +1,133 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput name="Name" aria-label="Name" [matAutocomplete]="autoFRM" [formControl]="frmCtrl"
+        [(ngModel)]="FORMNAME" (blur)="LoadGridData()" />
+      <mat-autocomplete #autoFRM="matAutocomplete">
+        <mat-option *ngFor="let sft of filteredFrms | async" [value]="sft">
+          <span>{{ sft }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Field</mat-label>
+      <input matInput type="text" name="Field" autocomplete="off" (ngModelChange)="CODECHANGE();"
+        [(ngModel)]="FIELDNAME" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>DISPNAME</mat-label>
+      <input matInput type="text" name="DISPNAME" autocomplete="off" [(ngModel)]="DISPNAME" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>COLWIDTH</mat-label>
+      <input matInput type="number" name="COLWIDTH" autocomplete="off" [(ngModel)]="COLWIDTH" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>HEADERALIGN </mat-label>
+      <input matInput type="text" name="HEADERALIGN" autocomplete="off" [(ngModel)]="HEADERALIGN" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>HEADERCOLOR</mat-label>
+      <input matInput type="text" name="HEADERCOLOR" autocomplete="off" [(ngModel)]="HEADERCOLOR" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>HEADERFONTSIZE</mat-label>
+      <input matInput type="number" name="HEADERFONTSIZE" autocomplete="off" [(ngModel)]="HEADERFONTSIZE" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CELLALIGN</mat-label>
+      <input matInput type="text" name="CELLALIGN" autocomplete="off" [(ngModel)]="CELLALIGN" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CELLCOLOR</mat-label>
+      <input matInput type="text" name="CELLCOLOR" autocomplete="off" [(ngModel)]="CELLCOLOR" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CELLFONTSIZE</mat-label>
+      <input matInput type="number" name="CELLFONTSIZE" autocomplete="off" [(ngModel)]="CELLFONTSIZE" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>BACKCOLOR</mat-label>
+      <input matInput type="text" name="BACKCOLOR" autocomplete="off" [(ngModel)]="BACKCOLOR" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>FONTNAME</mat-label>
+      <input matInput type="text" name="FONTNAME" autocomplete="off" [(ngModel)]="FONTNAME" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Order</mat-label>
+      <input matInput type="number" name="Order" autocomplete="off" [(ngModel)]="ORD" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>FORMAT</mat-label>
+      <input matInput type="text" name="FORMAT" autocomplete="off" [(ngModel)]="FORMAT" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>COLUMNSTYLE</mat-label>
+      <input matInput type="text" name="COLUMNSTYLE" autocomplete="off" [(ngModel)]="COLUMNSTYLE" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>GROUPKEY</mat-label>
+      <input matInput type="text" name="GROUPKEY" autocomplete="off" [(ngModel)]="GROUPKEY" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CUSTSUMMARY</mat-label>
+      <input matInput type="text" name="CUSTSUMMARY" autocomplete="off" [(ngModel)]="CUSTSUMMARY" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>MAXLEN</mat-label>
+      <input matInput type="number" name="MAXLEN" autocomplete="off" [(ngModel)]="MAXLEN" (blur)="Save()" />
+    </mat-form-field>
+
+    <section>
+      <mat-checkbox [(ngModel)]="DISP">DISP</mat-checkbox>
+      <mat-checkbox [(ngModel)]="LOCK">LOCK</mat-checkbox>
+      <mat-checkbox [(ngModel)]="ISMERGE">ISMERGE</mat-checkbox>
+      <mat-checkbox [(ngModel)]="ISBOLD">ISBOLD</mat-checkbox>
+      <mat-checkbox [(ngModel)]="ISRESIZE">ISRESIZE</mat-checkbox>
+    </section>
+
+    <div class="btn-grp">
+
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <mat-icon> refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 57vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)'>
+    </ag-grid-angular>
+
+    <mat-form-field class='mt-2 password' appearance="outline">
+      <input [type]="hide ? 'password' : 'text'" matInput name="Password" autocomplete="off" [(ngModel)]="PASSWORD"
+        (ngModelChange)="CHANGEPASSWORD();" />
+      <mat-icon class="mat-icon-dark" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  </div>
+</div>
+
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

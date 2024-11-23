@@ -1,0 +1,239 @@
+<div class="pkt-view__container">
+  <div class="pkt-view__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input #LOTInput (keyup)="0" (keydown)="keypressLOT($event,LOTInput.value)" matInput name="L Code"
+        aria-label="L Code" [matAutocomplete]="autoLOT" [formControl]="LOTCtrl" [(ngModel)]="L_CODE">
+      <mat-autocomplete #autoLOT="matAutocomplete">
+        <mat-option (onSelectionChange)="LOTInput.value !=undefined && onEnterLOT($event)"
+          *ngFor="let lot of filteredLOTs | async" [value]="lot.CODE" (click)="GetLotName(lot.NAME)">
+          <span class="s-right">{{lot.CODE}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>L Name</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="L_NAME" disabled>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sr No</mat-label>
+      <input matInput type="number" name="From Sr No" [(ngModel)]="SRNO" autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To Sr No</mat-label>
+      <input matInput type="number" name="To Sr No" [(ngModel)]="SRNOTO" autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput name="Tag" [(ngModel)]="TAG" (ngModelChange)="TAG = $event.toUpperCase()" autocomplete="off" />
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input matInput name="Employee" [matAutocomplete]="autoEMP" [formControl]="empCtrl" [(ngModel)]="EMP_CODE"
+        (ngModelChange)="GetEmpName()" />
+      <mat-autocomplete #autoEMP="matAutocomplete">
+        <mat-option *ngFor="let emp of filteredEmps | async" [value]="emp.code">
+          <span>{{ emp.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Emp Name</mat-label>
+      <input matInput autocomplete="off" [(ngModel)]="EMP_NAME" disabled />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Carat</mat-label>
+      <input matInput type="number" name="" [ngModel]="F_CARAT | setFloat:3" autocomplete="off"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_CARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To Carat</mat-label>
+      <input matInput type="number" name="" [(ngModel)]="T_CARAT" autocomplete="off"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_CARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>From Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="F_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID2.open()">
+      <mat-label>To Date</mat-label>
+      <input matInput [matDatepicker]="ID2" [readonly]="true" [(ngModel)]="T_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID2"></mat-datepicker-toggle>
+      <mat-datepicker #ID2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ex Carat</mat-label>
+      <input matInput type="number" name="" [ngModel]="F_EXCARAT | setFloat:3" autocomplete="off"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_EXCARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To Ex Carat</mat-label>
+      <input matInput type="number" name="" [ngModel]="T_EXCARAT | setFloat:3" autocomplete="off"
+        [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_EXCARAT = $event" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Pnt</mat-label>
+      <input matInput type="number" name="Pnt" [(ngModel)]="PNT" autocomplete="off" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Grp</mat-label>
+      <input matInput name="Grp" [(ngModel)]="GRP" autocomplete="off" />
+    </mat-form-field>
+
+    <mat-radio-group class="col-span-4" [(ngModel)]="SELECTMODE">
+      <mat-radio-button class="radio-btn" value="A">All</mat-radio-button>
+      <mat-radio-button class="radio-btn" value="M">Mak</mat-radio-button>
+      <mat-radio-button class="radio-btn" value="E">Extra</mat-radio-button>
+      <mat-radio-button class="radio-btn" value="P">Pen</mat-radio-button>
+      <mat-radio-button class="radio-btn" value="SE">Sec</mat-radio-button>
+      <mat-radio-button class="radio-btn" value="O">Org</mat-radio-button>
+      <mat-radio-button class="radio-btn" value="S">Stock</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Show' matTooltipClass="custom-tooltip" (click)="LoadGridData()">
+        <i class="icon-show mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Barcode' matTooltipClass="custom-tooltip" (click)="BARCODE()">
+        <i class="icon-barcode mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Print' matTooltipClass="custom-tooltip" (click)="PRINT()">
+        <i class="icon-print mat-icon"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="pkt-view__container--row-2">
+    <div class="pkt-view__container--row-subgrid-1">
+      <div class="col-span-full">Total</div>
+      <mat-form-field class="total" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" [(ngModel)]="TOTCRT"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="TOTCRT = $event" disabled />
+      </mat-form-field>
+
+      <mat-form-field class="total" appearance="outline">
+        <mat-label>OPkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="TOTPKT" />
+      </mat-form-field>
+
+      <mat-form-field class="total" appearance="outline">
+        <mat-label>Pkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="TOTPKT" />
+      </mat-form-field>
+    </div>
+    <div class="pkt-view__container--row-subgrid-2">
+      <div class="col-span-full">Recieve</div>
+      <mat-form-field class="recieve" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="RCVCRT | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="RCVCRT = $event" />
+      </mat-form-field>
+
+      <mat-form-field class="recieve" appearance="outline">
+        <mat-label>Pkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="RCVPKT" />
+      </mat-form-field>
+    </div>
+    <div class="pkt-view__container--row-subgrid-2">
+      <div class="col-span-full">Pending</div>
+      <mat-form-field class="pending" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="PENCRT | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="PENCRT = $event" />
+      </mat-form-field>
+
+      <mat-form-field class="pending" appearance="outline">
+        <mat-label>Pkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="PENPKT" />
+      </mat-form-field>
+    </div>
+    <div class="pkt-view__container--row-subgrid-2">
+      <div class="col-span-full">Stock</div>
+      <mat-form-field class="stock" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="STKCRT | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="STKCRT = $event" />
+      </mat-form-field>
+
+      <mat-form-field class="stock" appearance="outline">
+        <mat-label>Pkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="STKPKT">
+      </mat-form-field>
+
+    </div>
+    <div class="pkt-view__container--row-subgrid-1">
+      <div class="col-span-full">Makeable</div>
+      <mat-form-field class="makeable" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="MAKCRT"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="MAKCRT = $event" />
+      </mat-form-field>
+
+      <mat-form-field class="makeable" appearance="outline">
+        <mat-label>Pkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="MAKPKT" />
+      </mat-form-field>
+      <mat-form-field class="makeable" appearance="outline">
+        <mat-label>Per</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="MAKPER | setFloat:2"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="MAKPER = $event" />
+      </mat-form-field>
+    </div>
+    <div class="pkt-view__container--row-subgrid-1">
+      <div class="col-span-full">Extra</div>
+      <mat-form-field class="extra" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="EXTCRT | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="EXTCRT = $event" />
+      </mat-form-field>
+
+      <mat-form-field class="extra" appearance="outline">
+        <mat-label>Pkt</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="EXTPKT" />
+      </mat-form-field>
+
+      <mat-form-field class="extra" appearance="outline">
+        <mat-label>Pcs</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [(ngModel)]="EXTPCS" />
+      </mat-form-field>
+
+    </div>
+    <div class="pkt-view__container--row-subgrid-2">
+      <div class="col-span-full">Loss</div>
+      <mat-form-field class="loss" appearance="outline">
+        <mat-label>Carat</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="LOSSCRT | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="LOSSCRT = $event" />
+      </mat-form-field>
+
+      <mat-form-field class="loss" appearance="outline">
+        <mat-label>Per</mat-label>
+        <input matInput type="number" name="" autocomplete="off" disabled [ngModel]="LOSSPER | setFloat:2"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="LOSSPER = $event" />
+      </mat-form-field>
+    </div>
+  </div>
+  <ag-grid-angular style="width: 100%; height: auto;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+    [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true" [getRowStyle]="getRowStyle">
+  </ag-grid-angular>
+
+</div>

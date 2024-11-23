@@ -1,0 +1,65 @@
+<div class="main-container">
+  <app-side-bar></app-side-bar>
+  <main class="l-mini" id="main">
+
+    <div class="page-content">
+      <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)"
+        (selectedTabChange)="tabChanged($event)" class="main-tab">
+
+        <mat-tab *ngFor="let tab of dynamicTabs; let index = index" label="{{tab.label}}" panelClass="main-tab">
+          <ng-template mat-tab-label>
+
+            <div>{{tab.label}}</div>
+            <i class="icon-close mat-icon" (click)="removeTab(index)"></i>
+
+          </ng-template>
+          <ng-container *ngComponentOutlet="tab.component">
+          </ng-container>
+        </mat-tab>
+      </mat-tab-group>
+
+      <div class="side-hub">
+        <!-- <div class="side-hub-ele" (click)="openDialog('DockPrcPendingComponent');"><span class="vert-text">Process
+            Pending</span> -->
+        <!-- <div class="side-hub-ele" (click)="openDialog('DockCurRollComponent');"><span class="vert-text">Current
+            Rolling</span>
+        </div> -->
+        <!-- <div class="side-hub-ele" (click)="openDialog('DockProductionComponent');"><span
+            class="vert-text">Production</span>
+        </div> -->
+        <div class="side-hub-ele" (mouseenter)="prcdockopen()">
+          <div (mouseleave)="prcdockclose()">
+            <button class="btn theme-btn pin" *ngIf="Prcpin" (click)="prcdockpin = !prcdockpin">
+              <i class="fa fa-map-pin" aria-hidden="true"></i>
+            </button>
+            <app-dock-prc-pending class="hub1"></app-dock-prc-pending>
+            <span class="vert-text">Process Pending</span>
+          </div>
+        </div>
+
+        <div class="side-hub-ele" (mouseenter)="Curdockopen()">
+          <div (mouseleave)="Curdockclose()">
+            <button class="btn theme-btn pin" *ngIf="CurRollpin" (click)="Curdockpin = !Curdockpin">
+              <i class="fa fa-map-pin" aria-hidden="true"></i>
+            </button>
+            <app-dock-cur-roll class="hub2"></app-dock-cur-roll>
+            <span class="vert-text">Current
+              Rolling</span>
+          </div>
+        </div>
+
+        <div class="side-hub-ele" (mouseenter)="Proddockopen()">
+          <div (mouseleave)="Proddockclose()">
+            <button class="btn theme-btn pin" *ngIf="Prodpin" (click)="proddockpin = !proddockpin">
+              <i class="fa fa-map-pin" aria-hidden="true"></i>
+            </button>
+            <app-dock-production class="hub3"></app-dock-production>
+            <span class="vert-text">Production</span>
+          </div>
+        </div>
+        <div class="side-hub-ele-3"></div>
+        <div class="side-hub-ele-4"></div>
+      </div>
+    </div>
+  </main>
+</div>

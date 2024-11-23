@@ -1,0 +1,99 @@
+<div [ngClass]="{'prc-rec-issue__container-1': r_grp === false, 'prc-rec-issue__container-2': r_grp === true}">
+  <div class="mast__r-group">
+    <mat-radio-group [(ngModel)]="FPROC_CODE" class="r-group">
+      <mat-radio-button class="rad-btn" *ngFor="let item of PRTNArr" [value]="item.PRC_CODE">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__r-group">
+    <mat-radio-group [(ngModel)]="TPROC_CODE" class="r-group" (change)="FillSubPrc()" (change)="CheckEmp()">
+      <mat-radio-button class="rad-btn" *ngFor="let item of PRArr" [value]="item.PRC_CODE">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__r-group" *ngIf="r_grp">
+    <mat-radio-group [(ngModel)]="PRC_TYP" class="r-group">
+      <mat-radio-button class="rad-btn" *ngFor="let item of SPRArr" [value]="item.PRC_CODE">{{item.PRC_NAME}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Pnt</mat-label>
+      <input matInput type="number" name="Pnt" autocomplete="off" [(ngModel)]="LPnt" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" (click)="ID1.open()">
+      <mat-label>I Date</mat-label>
+      <input matInput [matDatepicker]="ID1" [readonly]="true" [(ngModel)]="I_DATE" />
+      <mat-datepicker-toggle matSuffix [for]="ID1"></mat-datepicker-toggle>
+      <mat-datepicker #ID1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>R No</mat-label>
+      <input matInput type="number" name="R No" autocomplete="off" (keydown)="LOADGRID($event,'RNO')"
+        [(ngModel)]="INO_rec" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>L Code</mat-label>
+      <input #prcrecisslcode matInput type="text" name="L Code" autocomplete="off" [(ngModel)]="L_CODE"
+        (ngModelChange)="L_CODE = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sr No</mat-label>
+      <input matInput type="number" name="Sr No" autocomplete="off" [(ngModel)]="SRNO" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tag</mat-label>
+      <input matInput type="text" name="Tag" autocomplete="off" (keydown.enter)="Save()" [(ngModel)]="TAG"
+        (ngModelChange)="TAG = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="show" appearance="outline">
+      <mat-label>Employee</mat-label>
+      <input matInput type="text" name="Employee" [matAutocomplete]="autoEMP" [formControl]="empCtrl"
+        [(ngModel)]="EMP_CODE" />
+      <mat-autocomplete #autoEMP="matAutocomplete">
+        <mat-option *ngFor="let emp of filteredEmps | async" [value]="emp.code">
+          <span>{{ emp.code }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-checkbox class="example-margin" [(ngModel)]="IS_FAN">Fancy</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="ISCFM">Confirm</mat-checkbox>
+
+    <mat-radio-group class="col-span-3" [(ngModel)]="Urgent">
+      <mat-radio-button value="A">All</mat-radio-button>
+      <mat-radio-button value="G">GIA Rolling</mat-radio-button>
+      <mat-radio-button value="U">Urgent Rolling</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="mast__container--row-2">
+    <ag-grid-angular style="width: 100%; height: 68vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (rowClicked)='onGridRowClicked($event)' [pinnedBottomRowData]="pinnedBottomRowData"
+      [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+  </div>
+  <div class="mast__container--row-3">
+    <div class="btn-grp">
+      <button class="btn theme-btn" matTooltip='Barcode' matTooltipClass="custom-tooltip" (click)="PRINT()">
+        <i class="icon-print mat-icon"></i>
+      </button>
+      <mat-form-field appearance="outline">
+        <mat-label>I No</mat-label>
+        <input matInput type="number" name="T No" autocomplete="off" (keydown)="LOADGRID($event,'INO')"
+          [(ngModel)]="INO_issue" />
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

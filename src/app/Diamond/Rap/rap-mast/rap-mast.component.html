@@ -1,0 +1,145 @@
+<div class="disc__container">
+  <div class="disc__container--col-1">
+    <div class="disc__container--row">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="RAPTYPE" class="radio-grp">
+        <mat-radio-button *ngFor="let item of RAPTARR" [value]="item.code" class="radio-btn">{{item.name}}
+        </mat-radio-button>
+
+      </mat-radio-group>
+
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="RTYPE" class="radio-grp">
+        <mat-radio-button *ngFor="let item of RTARR" [value]="item.code" class="radio-btn"
+          (change)="radioChange(item.DISP)">
+          {{item.name}}</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Shape Code</mat-label>
+        <input matInput name="Shape code" [matAutocomplete]="autoSHP" [formControl]="shpCtrl" [(ngModel)]="S_CODE"
+          (ngModelChange)="getShapeName()" />
+        <mat-autocomplete #autoSHP="matAutocomplete">
+          <mat-option *ngFor="let shp of filteredShps | async" [value]="shp.code">
+            <span>{{ shp.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="text" autocomplete="off" [(ngModel)]="S_NAME" disabled />
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" [hidden]="CUTVISIBLE">
+        <mat-label>Cut Code</mat-label>
+        <input matInput type="text" name="Cut" aria-label="Cut" [matAutocomplete]="autoCT" [formControl]="cutCtrl"
+          [(ngModel)]="CT_CODE" (ngModelChange)="getCutName()" />
+        <mat-autocomplete #autoCT="matAutocomplete">
+          <mat-option *ngFor="let ct of filteredCuts | async" [value]="ct.code">
+            <span>{{ ct.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field [hidden]="CUTVISIBLE" appearance="outline">
+        <input matInput type="text" autocomplete="off" [(ngModel)]="CT_NAME" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" [hidden]="FLOVISIBLE">
+        <mat-label>Flo Code</mat-label>
+        <input matInput type="text" name="Flo" aria-label="Flo" [matAutocomplete]="autoFL" [formControl]="floCtrl"
+          [(ngModel)]="FL_CODE" (ngModelChange)="getFloName()" />
+        <mat-autocomplete #autoFL="matAutocomplete">
+          <mat-option *ngFor="let fl of filteredFlos | async" [value]="fl.code">
+            <span>{{ fl.code }}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field [hidden]="FLOVISIBLE" appearance="outline">
+        <input matInput type="text" autocomplete="off" [(ngModel)]="FL_NAME" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Size code</mat-label>
+        <input matInput name="Size Code" aria-label="Size Code" [matAutocomplete]="autoSZ" [formControl]="szCtrl"
+          [(ngModel)]="SZ_CODE" (ngModelChange)="getSizeName()" />
+        <mat-autocomplete #autoSZ="matAutocomplete">
+          <mat-option *ngFor="let sz of filteredSzs | async" [value]="sz.code">
+            <span>{{ sz.code }} || {{sz.name}}</span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="number" autocomplete="off" [ngModel]="F_SIZE | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="F_SIZE = $event" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="number" autocomplete="off" [ngModel]="T_SIZE | setFloat:3"
+          [ngModelOptions]="{ updateOn: 'blur' }" (ngModelChange)="T_SIZE = $event" disabled />
+      </mat-form-field>
+
+    </div>
+
+    <ag-grid-angular style="width: 100%; height: 70vh;" class="ag-theme-alpine" [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+      (cellValueChanged)="Cellvaluechange($event)" [enableCellChangeFlash]="true"
+      [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+
+    <div class="disc__container--row">
+      <mat-form-field appearance="outline">
+        <mat-label>Version</mat-label>
+        <input matInput type="text" name="From Slip" autocomplete="off" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="text" autocomplete="off" disabled />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>To Version</mat-label>
+        <input matInput type="text" name="To Slip" autocomplete="off" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput type="text" autocomplete="off" disabled />
+      </mat-form-field>
+      <div class="btn-grp">
+        <button class="btn theme-btn" matTooltip='Compare' matTooltipClass="custom-tooltip">Compare</button>
+
+        <button class="btn theme-btn ml-auto" [hidden]="GIASHOW" matTooltip='G Import' matTooltipClass="custom-tooltip">
+          <label for="XlsInput1">
+            G.Import
+          </label>
+          <input type="file" id="XlsInput1" class="btn d-none" (change)="uploadCSVData($event)" #Import>
+        </button>
+
+        <button class="btn theme-btn ml-auto" [hidden]="LOOSESHOW" matTooltip='L Import'
+          matTooltipClass="custom-tooltip">
+          <i class="icon-import mat-icon"></i>
+          <label for="XlsInput1"></label>
+          <input type="file" id="XlsInput1" class="btn d-none" (change)="uploadCSVData($event)" #Import>
+        </button>
+
+        <button class="btn theme-btn" [hidden]="GIASHOW" (click)="CSVEXPORT('GIA')" matTooltip='GIA Export'
+          matTooltipClass="custom-tooltip">
+          <i class="icon-export mat-icon"></i>
+        </button>
+
+        <button class="btn theme-btn" [hidden]="LOOSESHOW" (click)="CSVEXPORT('LOOSE')" matTooltip='L. Export'
+          matTooltipClass="custom-tooltip">
+          <i class="icon-export mat-icon"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+  <div class="disc__container--col-2">
+    <ag-grid-angular style="width: 100%; height: 100%" class="ag-theme-alpine" [defaultColDef]="defaultColDef2"
+      [columnDefs]="columnDefs2" (gridReady)="onGridReady2($event)" [animateRows]="true" [enableCellChangeFlash]="true"
+      [frameworkComponents]="frameworkComponents2">
+    </ag-grid-angular>
+  </div>
+</div>

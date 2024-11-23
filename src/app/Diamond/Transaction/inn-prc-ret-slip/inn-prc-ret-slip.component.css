@@ -1,0 +1,8 @@
+.inn-prc-ret-slip__container {
+  height: 85vh;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto auto 1fr;
+  grid-gap: 0.5rem;
+}

@@ -1,0 +1,36 @@
+<div class="mast__container">
+  <div class="mast__container--row-1">
+    <mat-form-field appearance="outline">
+      <mat-label>Code *</mat-label>
+      <input matInput name="Code" autocomplete="off" [(ngModel)]="U_CAT"
+        (ngModelChange)="U_CAT = $event.toUpperCase()" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name *</mat-label>
+      <input matInput name="Name" autocomplete="off" [(ngModel)]="U_CATNAME"
+        (ngModelChange)="U_CATNAME = $event.toUpperCase()" />
+    </mat-form-field>
+
+
+
+    <div class="btn-grp">
+      <button class="btn theme-btn mr-2 ml-auto" matTooltip='Save' matTooltipClass="custom-tooltip" (click)="Save()">
+        <i class="icon-save mat-icon"></i>
+      </button>
+      <button class="btn theme-btn" matTooltip='Clear' matTooltipClass="custom-tooltip" (click)="Clear()">
+        <i class="icon-refresh mat-icon"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <ag-grid-angular style="width: 100%; height: calc(95vh - 130px);" class="ag-theme-alpine"
+    [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)" [animateRows]="true"
+    (rowClicked)='onGridRowClicked($event)'>
+  </ag-grid-angular>
+</div>
+
+<ngx-spinner>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

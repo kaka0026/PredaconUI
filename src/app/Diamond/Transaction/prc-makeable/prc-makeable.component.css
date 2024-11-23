@@ -1,0 +1,299 @@
+::ng-deep.mat-form-field-infix {
+  font-size: 0.7rem;
+}
+
+::ng-deep.mat-form-field-suffix {
+  right: 0.5rem;
+}
+
+.prc-mak-ag-grid {
+  grid-row: 2 / span 4;
+  grid-column: 4 / span 2;
+}
+.prc-mak-ag-grid-radio {
+  grid-row: 1 / span 1;
+  grid-column: 4 / span 2;
+
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-auto-flow: column;
+}
+
+.prc-makeable__container > mat-form-field {
+  max-width: -webkit-fill-available;
+  max-width: -moz-available;
+}
+
+.prc-makeable__container {
+  height: 88vh;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(3rem, 1fr));
+  grid-column-gap: 0.5rem;
+  justify-items: center;
+  align-items: center;
+}
+
+.L_CODE {
+  grid-row: 1 / span 1;
+}
+.L_NAME {
+  grid-row: 1 / span 1;
+}
+.L_CARAT {
+  grid-row: 1 / span 1;
+}
+
+.SRNO {
+  grid-row: 2 / span 1;
+}
+.TAG {
+  grid-row: 2 / span 1;
+}
+.prc-mak-radio {
+  grid-row: 2 / span 1;
+
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-auto-flow: column;
+}
+
+.DATE {
+  grid-row: 3 / span 1;
+}
+.TIME {
+  grid-row: 3 / span 1;
+}
+
+.PCS {
+  grid-row: 4 / span 1;
+}
+.CARAT {
+  grid-row: 4 / span 1;
+}
+
+.M_CARAT {
+  grid-row: 5 / span 1;
+}
+.EXP {
+  grid-row: 5 / span 1;
+}
+
+.S_CODE {
+  grid-row: 6 / span 1;
+}
+.S_NAME {
+  grid-row: 6 / span 1;
+}
+.REG_CODE {
+  grid-row: 6 / span 1;
+}
+.REG_NAME {
+  grid-row: 6 / span 1;
+}
+.CO_CODE {
+  grid-row: 6 / span 1;
+}
+.CO_NAME {
+  grid-row: 6 / span 1;
+}
+.PO_CODE {
+  grid-row: 6 / span 1;
+}
+.PO_NAME {
+  grid-row: 6 / span 1;
+}
+
+.Q_CODE {
+  grid-row: 7 / span 1;
+}
+.Q_NAME {
+  grid-row: 7 / span 1;
+}
+.RS_CODE {
+  grid-row: 7 / span 1;
+}
+.RS_NAME {
+  grid-row: 7 / span 1;
+}
+.CU_CODE {
+  grid-row: 7 / span 1;
+}
+.CU_NAME {
+  grid-row: 7 / span 1;
+}
+.SD_CODE {
+  grid-row: 7 / span 1;
+}
+.SD_NAME {
+  grid-row: 7 / span 1;
+}
+
+.C_CODE {
+  grid-row: 8 / span 1;
+}
+.C_NAME {
+  grid-row: 8 / span 1;
+}
+.DEPTH_CODE {
+  grid-row: 8 / span 1;
+}
+.DEPTH_NAME {
+  grid-row: 8 / span 1;
+}
+.EF_CODE {
+  grid-row: 8 / span 1;
+}
+.EF_NAME {
+  grid-row: 8 / span 1;
+}
+.SB_CODE {
+  grid-row: 8 / span 1;
+}
+.SB_NAME {
+  grid-row: 8 / span 1;
+}
+
+.CT_CODE {
+  grid-row: 9 / span 1;
+}
+.CT_NAME {
+  grid-row: 9 / span 1;
+}
+.RATIO_CODE {
+  grid-row: 9 / span 1;
+}
+.RATIO_NAME {
+  grid-row: 9 / span 1;
+}
+.EC_CODE {
+  grid-row: 9 / span 1;
+}
+.EC_NAME {
+  grid-row: 9 / span 1;
+}
+.SO_CODE {
+  grid-row: 9 / span 1;
+}
+.SO_NAME {
+  grid-row: 9 / span 1;
+}
+
+.PL_CODE {
+  grid-row: 10 / span 1;
+}
+.PL_NAME {
+  grid-row: 10 / span 1;
+}
+.TABLE_CODE {
+  grid-row: 10 / span 1;
+}
+.TABLE_NAME {
+  grid-row: 10 / span 1;
+}
+.GO_CODE {
+  grid-row: 10 / span 1;
+}
+.GO_NAME {
+  grid-row: 10 / span 1;
+}
+.TAB_CODE {
+  grid-row: 10 / span 1;
+}
+.TAB_NAME {
+  grid-row: 10 / span 1;
+}
+
+.SYM_CODE {
+  grid-row: 11 / span 1;
+}
+.SYM_NAME {
+  grid-row: 11 / span 1;
+}
+.DIAMETER_CODE {
+  grid-row: 11 / span 1;
+}
+.DIAMETER_NAME {
+  grid-row: 11 / span 1;
+}
+.GRN_CODE {
+  grid-row: 11 / span 1;
+}
+.GRN_NAME {
+  grid-row: 11 / span 1;
+}
+.TB_CODE {
+  grid-row: 11 / span 1;
+}
+.TB_NAME {
+  grid-row: 11 / span 1;
+}
+
+.FL_CODE {
+  grid-row: 12 / span 1;
+}
+.FL_NAME {
+  grid-row: 12 / span 1;
+}
+.RATE {
+  grid-row: 12 / span 1;
+  grid-column: 3 / span 2;
+  width: 100%;
+}
+.LSTR_CODE {
+  grid-row: 12 / span 1;
+}
+.LSTR_NAME {
+  grid-row: 12 / span 1;
+}
+.TO_CODE {
+  grid-row: 12 / span 1;
+}
+.TO_NAME {
+  grid-row: 12 / span 1;
+}
+
+.SH_CODE {
+  grid-row: 13 / span 1;
+}
+.SH_NAME {
+  grid-row: 13 / span 1;
+}
+.AMOUNT {
+  grid-row: 13 / span 1;
+  grid-column: 3 / span 2;
+  width: 100%;
+}
+.MLK_CODE {
+  grid-row: 13 / span 1;
+}
+.MLK_NAME {
+  grid-row: 13 / span 1;
+}
+.NAT_CODE {
+  grid-row: 13 / span 1;
+}
+.NAT_NAME {
+  grid-row: 13 / span 1;
+}
+
+.SAVE_BTN {
+  grid-row: 14 / span 1;
+}
+.DELETE_BTN {
+  grid-row: 14 / span 1;
+}
+
+@media only screen and (max-width: 1280px) {
+  .prc-makeable__container {
+    height: 88vh;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(4rem, 1fr));
+    grid-column-gap: 0.5rem;
+    justify-items: center;
+    align-items: center;
+  }
+}
